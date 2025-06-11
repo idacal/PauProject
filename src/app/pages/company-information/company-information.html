@@ -1,0 +1,54 @@
+<div class="bg-gray-100 min-h-screen">
+  <!-- Dashboard Header -->
+  <div class="bg-white border-b border-gray-200">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center py-3">
+        <div class="flex items-center space-x-4">
+          <div class="text-blue-900 font-bold text-lg">RYAN SPECIALTY</div>
+          <div class="border-l border-gray-300 h-6"></div>
+          <h1 class="text-xl text-gray-700">D&O Underwriting Dashboard - Ymabs Therapeutics</h1>
+        </div>
+        <div class="flex items-center space-x-4">
+          <!-- Icons can be added here -->
+          <span class="text-gray-600">Username</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Tabs -->
+  <div class="bg-white shadow-sm">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="flex space-x-8 -mb-px">
+        <a href="#" class="border-blue-500 text-blue-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">Company Information</a>
+        <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">Market Information</a>
+        <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">Financial Condition</a>
+        <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">Governance</a>
+        <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">Litigation & M.E</a>
+        <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">Nature of Business</a>
+        <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">Loss Probability Model</a>
+        <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">Overall Summary</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Dashboard Grid -->
+  <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- Left Column -->
+      <div class="lg:col-span-2 space-y-6">
+        <app-company-info-card></app-company-info-card>
+        <app-market-info-card></app-market-info-card>
+        <app-market-graphs-card></app-market-graphs-card>
+      </div>
+
+      <!-- Right Column -->
+      <div class="lg:col-span-1 space-y-6">
+        <app-financial-info-card></app-financial-info-card>
+        <app-latest-news-card></app-latest-news-card>
+      </div>
+
+    </div>
+  </div>
+</div>

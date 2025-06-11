@@ -1,0 +1,67 @@
+<div class="bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-4xl w-full space-y-8 bg-white p-10 rounded-xl shadow-md">
+    <div>
+      <h2 class="text-2xl font-semibold text-gray-700">Company Search</h2>
+    </div>
+    <form [formGroup]="searchForm" (ngSubmit)="submitAssessment()" class="mt-8 space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Left column -->
+        <div class="space-y-6">
+          <div>
+            <label for="companyName" class="block text-sm font-medium text-gray-700">Enter the Name of the company</label>
+            <div class="relative mt-1">
+              <input id="companyName" formControlName="companyName" type="text" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+              <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                <div class="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full border-t-transparent border-blue-500" role="status">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label for="ticker" class="block text-sm font-medium text-gray-700">Enter the Ticker of the company</label>
+            <input id="ticker" formControlName="ticker" type="text" class="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm disabled:bg-gray-50">
+          </div>
+        </div>
+        <!-- Right column -->
+        <div class="space-y-6">
+          <div>
+            <label for="insuranceType" class="block text-sm font-medium text-gray-700">Select the Insurance Type</label>
+            <select id="insuranceType" formControlName="insuranceType" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+              <option value="" disabled>Select an option</option>
+              <option value="type1">Type 1</option>
+              <option value="type2">Type 2</option>
+            </select>
+          </div>
+          <div class="flex items-center mt-6">
+            <input id="noTicker" formControlName="noTicker" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+            <label for="noTicker" class="ml-2 block text-sm text-gray-900">No ticker available</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- File Drop -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Upload documents</label>
+        <ngx-file-drop dropZoneLabel="Drag & Drop your documents here or" (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)"
+          [accept]="'.pdf,.doc,.docx'" dropZoneClassName="flex flex-col items-center justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none">
+          <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+            <div class="flex flex-col items-center">
+              <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-4-4V7a4 4 0 014-4h4l2 2h4a2 2 0 012 2v2M7 16V6m0 10L10.5 12.5M7 16l-2.5 2.5"></path></svg>
+              <span class="font-medium text-blue-500">
+                Browse
+              </span>
+              <p class="text-xs text-gray-500">Supported files: xls, doc, pdf</p>
+            </div>
+            <button type="button" (click)="openFileSelector()">Browse Files</button>
+          </ng-template>
+        </ngx-file-drop>
+      </div>
+      <!-- Submit Button -->
+      <div class="flex justify-end">
+        <button type="submit" class="group relative py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-400 hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+          Submit Assessment
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

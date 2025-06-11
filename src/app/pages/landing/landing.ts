@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 
 @Component({
@@ -12,7 +13,7 @@ export class Landing {
   public searchForm: FormGroup;
   public files: NgxFileDropEntry[] = [];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.searchForm = this.fb.group({
       companyName: ['Ymab', Validators.required],
       ticker: [{value: 'eg. Ymab', disabled: false}],
@@ -56,8 +57,11 @@ export class Landing {
   public submitAssessment() {
     if (this.searchForm.valid) {
       console.log('Form Submitted', this.searchForm.value);
-      // Here you would typically navigate to the dashboard
-      // this.router.navigate(['/company-information']);
+      // Navigate to the company information dashboard
+      this.router.navigate(['/company-information']);
+    } else {
+      // Mark all fields as touched to show validation errors
+      this.searchForm.markAllAsTouched();
     }
   }
 }

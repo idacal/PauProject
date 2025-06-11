@@ -1,67 +1,166 @@
-<div class="bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-4xl w-full space-y-8 bg-white p-10 rounded-xl shadow-md">
-    <div>
-      <h2 class="text-2xl font-semibold text-gray-700">Company Search</h2>
+<!-- Dashboard Header -->
+<div class="bg-white border-b border-gray-200">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center py-3">
+      <div class="flex items-center space-x-4">
+        <div class="text-blue-900 font-bold text-lg">RYAN SPECIALTY</div>
+        <div class="border-l border-gray-300 h-6"></div>
+        <h1 class="text-xl text-gray-700">Underwriting Dashboard</h1>
+      </div>
+      <div class="flex items-center space-x-3">
+        <!-- Export/Download Icon -->
+        <button class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors" title="Export Data">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+        </button>
+
+        <!-- Search Icon -->
+        <button class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors" title="Search">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </button>
+
+        <!-- Notifications Icon with Badge -->
+        <button class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors relative" title="Notifications">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+          </svg>
+          <!-- Notification Badge -->
+          <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+        </button>
+
+        <!-- Settings Icon -->
+        <button class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors" title="Settings">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
+        </button>
+
+        <!-- Help Icon -->
+        <button class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors" title="Help">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </button>
+
+        <!-- Fullscreen Toggle Icon -->
+        <button class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors" title="Toggle Fullscreen">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
+          </svg>
+        </button>
+
+        <!-- Separator -->
+        <div class="border-l border-gray-300 h-6"></div>
+
+        <!-- User Profile Dropdown -->
+        <div class="relative">
+          <button class="flex items-center space-x-2 p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
+            <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+              <span class="text-white text-sm font-medium">U</span>
+            </div>
+            <span class="font-medium">Username</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
-    <form [formGroup]="searchForm" (ngSubmit)="submitAssessment()" class="mt-8 space-y-6">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Left column -->
-        <div class="space-y-6">
-          <div>
-            <label for="companyName" class="block text-sm font-medium text-gray-700">Enter the Name of the company</label>
-            <div class="relative mt-1">
-              <input id="companyName" formControlName="companyName" type="text" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-              <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                <div class="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full border-t-transparent border-blue-500" role="status">
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="bg-gray-100 min-h-screen">
+  <div class="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto bg-white p-10 rounded-xl shadow-md">
+      <div>
+        <h2 class="text-2xl font-semibold text-gray-700 mb-8">Company Search</h2>
+      </div>
+      <form [formGroup]="searchForm" (ngSubmit)="submitAssessment()" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Left column -->
+          <div class="space-y-6">
+            <div>
+              <label for="companyName" class="block text-sm font-medium text-gray-700 mb-2">Enter the Name of the company</label>
+              <div class="relative">
+                <input id="companyName" formControlName="companyName" type="text" 
+                       class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                       [class.border-red-500]="searchForm.get('companyName')?.invalid && searchForm.get('companyName')?.touched">
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                  <div class="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full border-t-transparent border-blue-500" role="status">
+                  </div>
                 </div>
               </div>
+              <div *ngIf="searchForm.get('companyName')?.invalid && searchForm.get('companyName')?.touched" class="mt-1 text-sm text-red-600">
+                Company name is required
+              </div>
+            </div>
+            <div>
+              <label for="ticker" class="block text-sm font-medium text-gray-700 mb-2">Enter the Ticker of the company</label>
+              <input id="ticker" formControlName="ticker" type="text" 
+                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm disabled:bg-gray-50">
             </div>
           </div>
-          <div>
-            <label for="ticker" class="block text-sm font-medium text-gray-700">Enter the Ticker of the company</label>
-            <input id="ticker" formControlName="ticker" type="text" class="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm disabled:bg-gray-50">
+          <!-- Right column -->
+          <div class="space-y-6">
+            <div>
+              <label for="insuranceType" class="block text-sm font-medium text-gray-700 mb-2">Select the Insurance Type</label>
+              <select id="insuranceType" formControlName="insuranceType" 
+                      class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                      [class.border-red-500]="searchForm.get('insuranceType')?.invalid && searchForm.get('insuranceType')?.touched">
+                <option value="" disabled>Select an option</option>
+                <option value="D&O">D&O (Directors & Officers)</option>
+                <option value="General Liability">General Liability</option>
+                <option value="Professional Liability">Professional Liability</option>
+                <option value="Cyber Liability">Cyber Liability</option>
+              </select>
+              <div *ngIf="searchForm.get('insuranceType')?.invalid && searchForm.get('insuranceType')?.touched" class="mt-1 text-sm text-red-600">
+                Please select an insurance type
+              </div>
+            </div>
+            <div class="flex items-center">
+              <input id="noTicker" formControlName="noTicker" type="checkbox" 
+                     class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+              <label for="noTicker" class="ml-2 block text-sm text-gray-900">No ticker available</label>
+            </div>
           </div>
         </div>
-        <!-- Right column -->
-        <div class="space-y-6">
-          <div>
-            <label for="insuranceType" class="block text-sm font-medium text-gray-700">Select the Insurance Type</label>
-            <select id="insuranceType" formControlName="insuranceType" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-              <option value="" disabled>Select an option</option>
-              <option value="type1">Type 1</option>
-              <option value="type2">Type 2</option>
-            </select>
-          </div>
-          <div class="flex items-center mt-6">
-            <input id="noTicker" formControlName="noTicker" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-            <label for="noTicker" class="ml-2 block text-sm text-gray-900">No ticker available</label>
-          </div>
-        </div>
-      </div>
 
-      <!-- File Drop -->
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Upload documents</label>
-        <ngx-file-drop dropZoneLabel="Drag & Drop your documents here or" (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)"
-          [accept]="'.pdf,.doc,.docx'" dropZoneClassName="flex flex-col items-center justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none">
-          <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-            <div class="flex flex-col items-center">
-              <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-4-4V7a4 4 0 014-4h4l2 2h4a2 2 0 012 2v2M7 16V6m0 10L10.5 12.5M7 16l-2.5 2.5"></path></svg>
-              <span class="font-medium text-blue-500">
-                Browse
-              </span>
-              <p class="text-xs text-gray-500">Supported files: xls, doc, pdf</p>
-            </div>
-            <button type="button" (click)="openFileSelector()">Browse Files</button>
-          </ng-template>
-        </ngx-file-drop>
-      </div>
-      <!-- Submit Button -->
-      <div class="flex justify-end">
-        <button type="submit" class="group relative py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-400 hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-          Submit Assessment
-        </button>
-      </div>
-    </form>
+        <!-- File Drop -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Upload documents</label>
+          <ngx-file-drop dropZoneLabel="Drag & Drop your documents here or" 
+                         (onFileDrop)="dropped($event)" 
+                         (onFileOver)="fileOver($event)" 
+                         (onFileLeave)="fileLeave($event)"
+                         [accept]="'.pdf,.doc,.docx'" 
+                         dropZoneClassName="flex flex-col items-center justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none">
+            <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+              <div class="flex flex-col items-center">
+                <svg class="w-8 h-8 text-blue-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                </svg>
+                <span class="font-medium text-blue-500 mb-1">Browse</span>
+                <p class="text-xs text-gray-500">Supported files: xls, doc, pdf</p>
+              </div>
+              <button type="button" (click)="openFileSelector()" class="mt-2 text-blue-500 underline">Browse Files</button>
+            </ng-template>
+          </ngx-file-drop>
+        </div>
+        
+        <!-- Submit Button -->
+        <div class="flex justify-end">
+          <button type="submit" 
+                  class="px-6 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-gray-400"
+                  [disabled]="searchForm.invalid">
+            Submit Assessment
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

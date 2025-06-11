@@ -3,17 +3,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { Layout } from './core/components/layout/layout';
 
 const routes: Routes = [
+  // Landing page as independent route with dashboard header
+  { path: '', redirectTo: 'landing', pathMatch: 'full' },
+  {
+    path: 'landing',
+    loadChildren: () => import('./pages/landing/landing-module').then(m => m.LandingModule)
+  },
   // Routes that use the main layout with the global navbar
   {
-    path: '',
+    path: 'public',
     component: Layout,
     children: [
-      { path: '', redirectTo: 'landing', pathMatch: 'full' },
-      {
-        path: 'landing',
-        loadChildren: () => import('./pages/landing/landing-module').then(m => m.LandingModule)
-      },
-      // Assuming 'News' and 'Contact' use the main layout
       {
         path: 'news',
         loadChildren: () => import('./pages/news/news-module').then(m => m.NewsModule)

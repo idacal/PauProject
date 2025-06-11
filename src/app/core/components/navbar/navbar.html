@@ -1,16 +1,26 @@
-<nav class="bg-white shadow-sm">
-  <div class="container mx-auto px-4">
-    <div class="flex justify-between items-center py-3">
+<nav class="bg-white shadow-sm border-b border-gray-200">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center py-4">
+      <!-- Logo/Brand -->
       <div class="flex items-center">
-        <a routerLink="/landing" class="text-2xl font-bold text-gray-800">Company</a>
+        <span class="text-2xl font-bold text-gray-800">Company</span>
       </div>
-      <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
-        <a routerLink="/landing" routerLinkActive="text-gray-900 font-semibold" [routerLinkActiveOptions]="{exact: true}" class="text-gray-500 hover:text-gray-900">Home</a>
-        <a routerLink="/news" routerLinkActive="text-gray-900 font-semibold" class="text-gray-500 hover:text-gray-900">News</a>
-        <a routerLink="/contact" routerLinkActive="text-gray-900 font-semibold" class="text-gray-500 hover:text-gray-900">Contact</a>
+      
+      <!-- Navigation Links -->
+      <div class="hidden md:flex space-x-8">
+        <a routerLink="/public/news" routerLinkActive="text-blue-600" class="text-gray-600 hover:text-gray-900 font-medium">News</a>
+        <a routerLink="/public/contact" routerLinkActive="text-blue-600" class="text-gray-600 hover:text-gray-900 font-medium">Contact</a>
       </div>
+      
+      <!-- Search -->
       <div class="flex items-center">
-        <input type="text" placeholder="Search" class="border border-gray-300 rounded-md py-2 px-4 w-64 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <div class="relative">
+          <input 
+            type="text" 
+            placeholder="Search" 
+            class="w-64 px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+          >
+        </div>
       </div>
     </div>
   </div>

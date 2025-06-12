@@ -8,6 +8,7 @@ import { MarketInfoCard } from './components/market-info-card/market-info-card';
 import { MarketGraphsCard } from './components/market-graphs-card/market-graphs-card';
 import { FinancialInfoCard } from './components/financial-info-card/financial-info-card';
 import { LatestNewsCard } from './components/latest-news-card/latest-news-card';
+import { SharedModule } from '../../shared/shared-module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { LatestNewsCard } from './components/latest-news-card/latest-news-card';
   ],
   imports: [
     CommonModule,
-    CompanyInformationRoutingModule
+    CompanyInformationRoutingModule,
+    SharedModule
   ]
 })
 export class CompanyInformationModule { }

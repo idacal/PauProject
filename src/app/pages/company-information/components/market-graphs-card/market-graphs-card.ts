@@ -82,25 +82,17 @@ export class MarketGraphsCard implements OnInit, AfterViewInit {
     const canvas = document.getElementById('marketCapChart') as HTMLCanvasElement;
     if (canvas) {
       this.marketCapChart = new Chart(canvas, {
-        type: 'bar',
+        type: 'line',
         data: {
-          labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
           datasets: [{
             label: 'Market Cap (Billions)',
-            data: [2.1, 2.4, 2.8, 3.2],
-            backgroundColor: [
-              'rgba(34, 197, 94, 0.8)',
-              'rgba(59, 130, 246, 0.8)',
-              'rgba(168, 85, 247, 0.8)',
-              'rgba(249, 115, 22, 0.8)'
-            ],
-            borderColor: [
-              'rgba(34, 197, 94, 1)',
-              'rgba(59, 130, 246, 1)',
-              'rgba(168, 85, 247, 1)',
-              'rgba(249, 115, 22, 1)'
-            ],
-            borderWidth: 1
+            data: [2.8, 3.1, 2.9, 3.4, 3.7, 3.2, 3.9, 4.1, 3.8, 4.3, 4.6, 4.2],
+            borderColor: 'rgb(34, 197, 94)',
+            backgroundColor: 'rgba(34, 197, 94, 0.1)',
+            borderWidth: 2,
+            fill: true,
+            tension: 0.4
           }]
         },
         options: {
@@ -113,7 +105,7 @@ export class MarketGraphsCard implements OnInit, AfterViewInit {
           },
           scales: {
             y: {
-              beginAtZero: true,
+              beginAtZero: false,
               grid: {
                 color: 'rgba(0, 0, 0, 0.1)'
               }

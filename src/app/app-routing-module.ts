@@ -37,6 +37,10 @@ const routes: Routes = [
     path: 'financial-information',
     loadChildren: () => import('./pages/financial-information/financial-information-module').then(m => m.FinancialInformationModule)
   },
+  {
+    path: 'load-assessment',
+    loadChildren: () => import('./pages/load-assessment/load-assessment-module').then(m => m.LoadAssessmentModule)
+  },
 ];
 
 @NgModule({

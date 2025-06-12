@@ -5,6 +5,7 @@ import { NgxFileDropModule } from 'ngx-file-drop';
 
 import { LandingRoutingModule } from './landing-routing-module';
 import { Landing } from './landing';
+import { SharedModule } from '../../shared/shared-module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { Landing } from './landing';
     CommonModule,
     LandingRoutingModule,
     ReactiveFormsModule,
-    NgxFileDropModule
+    NgxFileDropModule,
+    SharedModule
   ]
 })
 export class LandingModule { }

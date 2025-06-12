@@ -1,0 +1,21 @@
+// Estilos específicos para el componente de barra superior
+.dashboard-header {
+  // Ajustes para transiciones suaves
+  .transition-colors {
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+  }
+  
+  // Estilos para badges de notificación
+  .notification-badge {
+    animation: pulse 2s infinite;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+} 

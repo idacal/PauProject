@@ -39,7 +39,7 @@ export class Landing {
 
   public tickerOptions = [
     'YMAB',
-    'eg. Ymab'
+    'Other'
   ];
 
   constructor(private fb: FormBuilder, private router: Router) {

@@ -50,6 +50,14 @@ export class MarketGraphsCard implements OnInit, AfterViewInit {
             borderWidth: 2,
             fill: true,
             tension: 0.4
+          }, {
+            label: 'Target Price ($)',
+            data: [42.0, 46.5, 50.8, 47.2, 51.1, 55.8, 52.3, 56.7, 59.8, 57.4, 61.5, 63.2],
+            borderColor: 'rgb(239, 68, 68)',
+            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+            borderWidth: 2,
+            fill: false,
+            tension: 0.4
           }]
         },
         options: {
@@ -57,7 +65,8 @@ export class MarketGraphsCard implements OnInit, AfterViewInit {
           maintainAspectRatio: false,
           plugins: {
             legend: {
-              display: false
+              display: true,
+              position: 'bottom'
             }
           },
           scales: {
@@ -65,6 +74,10 @@ export class MarketGraphsCard implements OnInit, AfterViewInit {
               beginAtZero: false,
               grid: {
                 color: 'rgba(0, 0, 0, 0.1)'
+              },
+              title: {
+                display: true,
+                text: 'USD'
               }
             },
             x: {
@@ -93,6 +106,14 @@ export class MarketGraphsCard implements OnInit, AfterViewInit {
             borderWidth: 2,
             fill: true,
             tension: 0.4
+          }, {
+            label: 'Industry Average (Billions)',
+            data: [2.5, 2.8, 2.6, 3.1, 3.4, 2.9, 3.6, 3.8, 3.5, 4.0, 4.3, 3.9],
+            borderColor: 'rgb(168, 85, 247)',
+            backgroundColor: 'rgba(168, 85, 247, 0.1)',
+            borderWidth: 2,
+            fill: false,
+            tension: 0.4
           }]
         },
         options: {
@@ -100,7 +121,8 @@ export class MarketGraphsCard implements OnInit, AfterViewInit {
           maintainAspectRatio: false,
           plugins: {
             legend: {
-              display: false
+              display: true,
+              position: 'bottom'
             }
           },
           scales: {
@@ -108,6 +130,10 @@ export class MarketGraphsCard implements OnInit, AfterViewInit {
               beginAtZero: false,
               grid: {
                 color: 'rgba(0, 0, 0, 0.1)'
+              },
+              title: {
+                display: true,
+                text: 'USD'
               }
             },
             x: {

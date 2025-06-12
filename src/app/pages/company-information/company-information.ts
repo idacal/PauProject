@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HeaderConfig } from '../../shared/dashboard-header/dashboard-header.component';
+import { TabItem } from '../../shared/navigation-tabs/navigation-tabs.component';
 
 @Component({
   selector: 'app-company-information',
@@ -13,13 +14,14 @@ export class CompanyInformation {
   
   public headerConfig: HeaderConfig = {
     pageType: 'company',
-    title: 'D&O Underwriting Dashboard - Ymabs Therapeutics',
+    title: 'D&O Underwriting Dashboard',
+    subtitle: 'Ymabs Therapeutics',
     showUploadIcon: true,
     backgroundColor: 'bg-gray-50',
     textColor: 'text-gray-600'
   };
 
-  public tabs = [
+  public tabs: TabItem[] = [
     { id: 'company-information', label: 'Company Information' },
     { id: 'market-information', label: 'Market Information' },
     { id: 'financial-condition', label: 'Financial Condition' },

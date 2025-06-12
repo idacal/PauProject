@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 export interface HeaderConfig {
   pageType: 'landing' | 'company' | 'other';
   title: string;
+  subtitle?: string;
   showUploadIcon?: boolean;
   backgroundColor?: string;
   textColor?: string;

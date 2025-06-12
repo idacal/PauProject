@@ -1,16 +1,16 @@
 <div class="bg-white p-6 rounded-lg shadow-md h-full flex flex-col">
   <div class="flex justify-between items-center mb-4">
     <h3 class="text-lg font-semibold text-blue-700">Market Graphs</h3>
-    <div class="flex items-center bg-gray-100 rounded-lg p-1 text-sm">
+    <div class="flex items-center bg-gray-100 rounded-lg p-0.5 text-sm">
       <button 
         (click)="switchChart('sharePrice')"
-        [class]="activeChart === 'sharePrice' ? 'px-4 py-2 rounded-md bg-blue-600 text-white font-medium shadow-sm' : 'px-4 py-2 rounded-md text-gray-600 hover:text-gray-800 font-medium'"
+        [class]="activeChart === 'sharePrice' ? 'px-3 py-1.5 rounded-md bg-blue-600 text-white font-medium shadow-sm' : 'px-3 py-1.5 rounded-md bg-black text-white font-medium'"
       >
         Share Price
       </button>
       <button 
         (click)="switchChart('marketCap')"
-        [class]="activeChart === 'marketCap' ? 'px-4 py-2 rounded-md bg-blue-600 text-white font-medium shadow-sm' : 'px-4 py-2 rounded-md text-gray-600 hover:text-gray-800 font-medium'"
+        [class]="activeChart === 'marketCap' ? 'px-3 py-1.5 rounded-md bg-blue-600 text-white font-medium shadow-sm' : 'px-3 py-1.5 rounded-md bg-black text-white font-medium'"
       >
         Market Cap
       </button>

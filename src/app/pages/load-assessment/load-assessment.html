@@ -3,36 +3,11 @@
   <app-dashboard-header [config]="headerConfig"></app-dashboard-header>
 
   <!-- Navigation Tabs -->
-  <div class="bg-gray-700 border-b border-gray-600">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-      <nav class="flex space-x-8">
-        <a href="/company-information" class="text-gray-300 hover:text-white px-3 py-4 text-sm font-medium border-b-2 border-transparent hover:border-gray-300 transition-colors">
-          Company Information
-        </a>
-        <a href="/market-information" class="text-gray-300 hover:text-white px-3 py-4 text-sm font-medium border-b-2 border-transparent hover:border-gray-300 transition-colors">
-          Market Information
-        </a>
-        <a href="/financial-information" class="text-gray-300 hover:text-white px-3 py-4 text-sm font-medium border-b-2 border-transparent hover:border-gray-300 transition-colors">
-          Financial Condition
-        </a>
-        <a href="#" class="text-gray-300 hover:text-white px-3 py-4 text-sm font-medium border-b-2 border-transparent hover:border-gray-300 transition-colors">
-          Governance
-        </a>
-        <a href="#" class="text-gray-300 hover:text-white px-3 py-4 text-sm font-medium border-b-2 border-transparent hover:border-gray-300 transition-colors">
-          Litigation & IoT
-        </a>
-        <a href="/news" class="text-gray-300 hover:text-white px-3 py-4 text-sm font-medium border-b-2 border-transparent hover:border-gray-300 transition-colors">
-          Nature of Business
-        </a>
-        <a href="#" class="text-gray-300 hover:text-white px-3 py-4 text-sm font-medium border-b-2 border-transparent hover:border-gray-300 transition-colors">
-          Loss Probability Model
-        </a>
-        <a href="#" class="text-gray-300 hover:text-white px-3 py-4 text-sm font-medium border-b-2 border-transparent hover:border-gray-300 transition-colors">
-          Overall Summary
-        </a>
-      </nav>
-    </div>
-  </div>
+  <app-navigation-tabs 
+    [tabs]="tabs" 
+    [activeTab]="activeTab" 
+    (tabChange)="switchTab($event)">
+  </app-navigation-tabs>
 
 
 

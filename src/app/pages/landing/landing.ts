@@ -4,6 +4,13 @@ import { Router } from '@angular/router';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { HeaderConfig } from '../../shared/dashboard-header/dashboard-header.component';
 
+interface MenuTab {
+  id: string;
+  label: string;
+  disabled: boolean;
+  isDropdown?: boolean;
+}
+
 @Component({
   selector: 'app-landing',
   standalone: false,
@@ -23,11 +30,10 @@ export class Landing {
   };
 
   public companyOptions = [
-    'Ymab',
-    'YMAB Therapeutics, Inc.',
-    'MarkerGenetics, Inc.',
-    'VF Technology, Inc.',
-    'Senzar, Inc.'
+    'YMAB Therapeutics, Inc. / USA / YMAB',
+    'MarkerGenetics, Inc.  / USA / MRKR',
+    'VF Technology, Inc.  / USA / VFC',
+    'Senzar, Inc. / USA / SENZA'
   ];
 
   public insuranceOptions = [
@@ -37,32 +43,38 @@ export class Landing {
     { value: 'Crime', label: 'Crime' }
   ];
 
-  public tickerOptions = [
-    'YMAB',
-    'Other'
+  // Cambiar tickerOptions por hazardClassOptions
+  public hazardClassOptions = [
+    'Pharmaceutical',
+    'Healthcare',
+  ];
+
+  // Agregar las pestañas del menú
+  public menuTabs: MenuTab[] = [
+    { id: 'company-info', label: 'Company Information', disabled: true },
+    { id: 'market-info', label: 'Market Information', disabled: true },
+    { id: 'financial-condition', label: 'Financial Condition', disabled: true },
+    { id: 'do-dropdown', label: 'D&O', disabled: true, isDropdown: true },
+    { id: 'overall-summary', label: 'Overall Summary', disabled: true }
+  ];
+
+  // Opciones del dropdown D&O
+  public doDropdownOptions = [
+    { id: 'governance', label: 'Governance' },
+    { id: 'litigation', label: 'Litigation & M.E' },
+    { id: 'nature-business', label: 'Nature of Business' },
+    { id: 'loss-probability', label: 'Loss Probability Model' }
   ];
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.searchForm = this.fb.group({
       companyName: ['Ymab', Validators.required],
-      ticker: [{value: 'eg. Ymab', disabled: false}],
-      noTicker: [false],
+      hazardClass: ['', Validators.required], // Cambiar ticker por hazardClass
       insuranceType: ['D&O', Validators.required]
-    });
-
-    this.searchForm.get('noTicker')?.valueChanges.subscribe(value => {
-      const tickerControl = this.searchForm.get('ticker');
-      if (value) {
-        tickerControl?.disable();
-        tickerControl?.setValue('');
-      } else {
-        tickerControl?.enable();
-        tickerControl?.setValue('eg. Ymab');
-      }
     });
   }
 
-  public dropped(files: NgxFileDropEntry[]) {
+  public dropped(files: any) {
     this.files = files;
     for (const droppedFile of files) {
       if (droppedFile.fileEntry.isFile) {

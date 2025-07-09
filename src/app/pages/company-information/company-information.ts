@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HeaderConfig } from '../../shared/dashboard-header/dashboard-header.component';
-import { TabItem } from '../../shared/navigation-tabs/navigation-tabs.component';
+import { TabItem, DropdownOption } from '../../shared/navigation-tabs/navigation-tabs.component';
 
 @Component({
   selector: 'app-company-information',
@@ -25,11 +25,25 @@ export class CompanyInformation {
     { id: 'company-information', label: 'Company Information' },
     { id: 'market-information', label: 'Market Information' },
     { id: 'financial-condition', label: 'Financial Condition' },
-    { id: 'governance', label: 'Governance' },
-    { id: 'litigation', label: 'Litigation & M.E' },
-    { id: 'nature-business', label: 'Nature of Business' },
-    { id: 'loss-probability', label: 'Loss Probability Model' },
-    { id: 'overall-summary', label: 'Overall Summary' }
+    { 
+      id: 'do-dropdown', 
+      label: 'D&O', 
+      isDropdown: true,
+      dropdownOptions: [
+        { id: 'governance', label: 'Governance' },
+        { id: 'litigation', label: 'Litigation & M.E' },
+        { id: 'nature-business', label: 'Nature of Business' },
+        { id: 'loss-probability', label: 'Loss Probability Model' }
+      ]
+    },
+    { 
+      id: 'overall-summary-dropdown', 
+      label: 'Overall Summary', 
+      isDropdown: true,
+      dropdownOptions: [
+        { id: 'overall-summary', label: 'D&O Summary' }
+      ]
+    }
   ];
 
   constructor(private router: Router) { }

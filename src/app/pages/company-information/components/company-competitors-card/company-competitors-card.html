@@ -1,0 +1,34 @@
+<div class="bg-white rounded-lg shadow-md p-6 h-80 flex flex-col">
+  <h3 class="text-lg font-semibold text-gray-800 mb-3">Company's Competitors</h3>
+  
+  <div class="overflow-y-auto flex-1">
+    <table class="w-full">
+      <!-- Header -->
+      <thead>
+        <tr class="bg-blue-800 text-white">
+          <th class="text-center py-1.5 px-1.5 font-medium text-xs leading-tight">ENTITY NAME</th>
+          <th class="text-center py-1.5 px-1.5 font-medium text-xs leading-tight">PEER SCORE</th>
+          <th class="text-center py-1.5 px-1.5 font-medium text-xs leading-tight">MARKET CAP - $M</th>
+        </tr>
+      </thead>
+      
+      <!-- Body -->
+      <tbody>
+        <tr 
+          *ngFor="let competitor of competitors; let i = index" 
+          [class]="i % 2 === 0 ? 'bg-gray-50' : 'bg-white'"
+          class="border-b border-gray-200 hover:bg-gray-100 transition-colors">
+          <td class="py-1.5 px-1.5 text-xs text-gray-700 text-center leading-tight">
+            {{ competitor.name }}
+          </td>
+          <td class="py-1.5 px-1.5 text-xs text-gray-700 text-center leading-tight">
+            {{ competitor.peerScore }}
+          </td>
+          <td class="py-1.5 px-1.5 text-xs text-gray-700 text-center leading-tight">
+            {{ competitor.marketCap }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div> 

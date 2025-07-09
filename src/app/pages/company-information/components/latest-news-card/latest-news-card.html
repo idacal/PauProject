@@ -1,98 +1,75 @@
-<div class="bg-white p-6 rounded-lg shadow-md h-full flex flex-col">
+<div class="bg-white p-6 rounded-lg shadow-md h-80 flex flex-col">
   <div class="flex justify-between items-center mb-4">
-    <h3 class="text-lg font-semibold text-blue-700">Latest News</h3>
-    <div class="relative">
-      <input type="text" placeholder="Search your news..." class="border rounded-md py-1 pl-8 pr-2 text-sm w-48">
-      <svg class="w-4 h-4 text-gray-400 absolute top-1/2 left-2 transform -translate-y-1/2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-      </svg>
+    <h3 class="text-lg font-semibold text-blue-700">News Feed</h3>
+    <div class="flex items-center gap-3">
+      <!-- Search Input -->
+      <div class="relative">
+        <input 
+          type="text" 
+          placeholder="Search your news..." 
+          [value]="searchQuery"
+          (input)="updateSearchQuery($event)"
+          class="border rounded-md py-1 pl-8 pr-2 text-sm w-48">
+        <svg class="w-4 h-4 text-gray-400 absolute top-1/2 left-2 transform -translate-y-1/2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </div>
+      
+      <!-- Save News Button -->
+      <button 
+        (click)="saveSelectedNews()"
+        [disabled]="!hasSelectedNews"
+        class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded text-xs font-medium border border-gray-300 flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed">
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3-3m0 0l-3 3m3-3v12"></path>
+        </svg>
+        Save news
+      </button>
     </div>
   </div>
 
-  <div class="flex-1 overflow-y-auto max-h-96">
+  <div class="flex-1 overflow-y-auto">
     <div class="space-y-4 text-sm">
-      <!-- News Item 1 -->
-      <div class="border-b pb-4 flex">
-        <div class="flex-1">
-          <a href="#" class="font-semibold text-blue-600 hover:underline">Y-mabs Therapeutics, Inc. closes $143.8 million common stock offering.</a>
-          <span class="text-gray-500 text-xs ml-2">November 24, 2020</span>
-          <p class="text-gray-600 mt-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        </div>
-              <div class="flex items-center ml-4">
-        <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded text-xs font-medium border border-gray-300 flex items-center gap-1">
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-          </svg>
-          Read more
-        </button>
-      </div>
-    </div>
-
-    <!-- News Item 2 -->
-    <div class="border-b pb-4 flex">
-      <div class="flex-1">
-        <a href="#" class="font-semibold text-blue-600 hover:underline">Y-mabs Therapeutics, Inc. prices $125 million common stock offering.</a>
-        <span class="text-gray-500 text-xs ml-2">October 30, 2019</span>
-        <p class="text-gray-600 mt-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      </div>
-      <div class="flex items-center ml-4">
-        <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded text-xs font-medium border border-gray-300 flex items-center gap-1">
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-          </svg>
-          Read more
-        </button>
-      </div>
-    </div>
-
-    <!-- News Item 3 -->
-    <div class="border-b pb-4 flex">
-      <div class="flex-1">
-        <a href="#" class="font-semibold text-blue-600 hover:underline">Y-mabs Therapeutics announces strategic partnership with leading biotech company.</a>
-        <span class="text-gray-500 text-xs ml-2">September 15, 2019</span>
-        <p class="text-gray-600 mt-1">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-      </div>
-      <div class="flex items-center ml-4">
-        <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded text-xs font-medium border border-gray-300 flex items-center gap-1">
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-          </svg>
-          Read more
-        </button>
-      </div>
-    </div>
-
-      <!-- News Item 4 -->
-      <div class="border-b pb-4 flex">
-        <div class="flex-1">
-          <a href="#" class="font-semibold text-blue-600 hover:underline">Y-mabs Therapeutics receives FDA breakthrough therapy designation.</a>
-          <span class="text-gray-500 text-xs ml-2">August 12, 2019</span>
-          <p class="text-gray-600 mt-1">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.</p>
-        </div>
-        <div class="flex items-center ml-4">
-          <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded text-xs font-medium border border-gray-300 flex items-center gap-1">
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-            </svg>
-            Read more
-          </button>
-        </div>
-      </div>
-
-      <!-- News Item 5 -->
-      <div class="flex">
-        <div class="flex-1">
-          <a href="#" class="font-semibold text-blue-600 hover:underline">Y-mabs Therapeutics announces Q3 2019 financial results and business updates.</a>
-          <span class="text-gray-500 text-xs ml-2">July 8, 2019</span>
-          <p class="text-gray-600 mt-1">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-        <div class="flex items-center ml-4">
-          <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded text-xs font-medium border border-gray-300 flex items-center gap-1">
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-            </svg>
-            Read more
-          </button>
+      <!-- Dynamic News Items -->
+      <div 
+        *ngFor="let newsItem of newsItems; let isLast = last" 
+        [class.border-b]="!isLast" 
+        class="pb-4">
+        
+        <!-- News Item Container with Checkbox -->
+        <div class="flex items-start gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"
+             [class.bg-blue-50]="newsItem.selected"
+             [class.border-blue-300]="newsItem.selected">
+          
+          <!-- Checkbox -->
+          <div class="flex items-center justify-center self-center">
+            <input 
+              type="checkbox" 
+              [id]="'news-' + newsItem.id"
+              [checked]="newsItem.selected"
+              (change)="toggleNewsSelection(newsItem.id)"
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
+          </div>
+          
+          <!-- News Content -->
+          <div class="flex-1 min-w-0">
+            <a href="#" class="font-semibold text-blue-600 hover:underline block">
+              {{ newsItem.title }}
+            </a>
+            <span class="text-gray-500 text-xs">{{ newsItem.date }}</span>
+            <p class="text-gray-600 mt-1 text-sm">{{ newsItem.content }}</p>
+          </div>
+          
+          <!-- Read More Button -->
+          <div class="flex items-center">
+            <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded text-xs font-medium border border-gray-300 flex items-center gap-1 flex-shrink-0">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+              </svg>
+              Read more
+            </button>
+          </div>
+          
         </div>
       </div>
     </div>

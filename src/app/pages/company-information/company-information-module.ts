@@ -8,6 +8,7 @@ import { MarketInfoCard } from './components/market-info-card/market-info-card';
 import { MarketGraphsCard } from './components/market-graphs-card/market-graphs-card';
 import { FinancialInfoCard } from './components/financial-info-card/financial-info-card';
 import { LatestNewsCard } from './components/latest-news-card/latest-news-card';
+import { CompanyCompetitorsCard } from './components/company-competitors-card/company-competitors-card';
 import { SharedModule } from '../../shared/shared-module';
 
 
@@ -18,7 +19,8 @@ import { SharedModule } from '../../shared/shared-module';
     MarketInfoCard,
     MarketGraphsCard,
     FinancialInfoCard,
-    LatestNewsCard
+    LatestNewsCard,
+    CompanyCompetitorsCard
   ],
   imports: [
     CommonModule,

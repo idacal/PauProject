@@ -13,23 +13,26 @@
   <div class="container mx-auto p-4 sm:p-6 lg:p-8">
     
     <!-- Company Information Tab Content -->
-    <div *ngIf="activeTab === 'company-information'" class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-      <!-- Left Column -->
-      <div class="space-y-6 flex flex-col">
-        <app-company-info-card></app-company-info-card>
-        <app-market-info-card></app-market-info-card>
-        <div class="flex-1">
-          <app-market-graphs-card></app-market-graphs-card>
-        </div>
+    <div *ngIf="activeTab === 'company-information'" class="space-y-6">
+      
+      <!-- Row 1: Company Information + Financial Information -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <app-company-info-card class="h-80"></app-company-info-card>
+        <app-financial-info-card class="h-80"></app-financial-info-card>
       </div>
-
-      <!-- Right Column -->
-      <div class="space-y-6 flex flex-col h-full">
-        <app-financial-info-card></app-financial-info-card>
-        <div class="flex-1">
-          <app-latest-news-card></app-latest-news-card>
-        </div>
+      
+      <!-- Row 2: Market Information + Market Graphs -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <app-market-info-card class="h-80"></app-market-info-card>
+        <app-market-graphs-card class="h-80"></app-market-graphs-card>
       </div>
+      
+      <!-- Row 3: Company's Competitors + News Feed -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <app-company-competitors-card class="h-80"></app-company-competitors-card>
+        <app-latest-news-card class="h-80"></app-latest-news-card>
+      </div>
+      
     </div>
 
     <!-- Placeholder Content for Other Tabs -->

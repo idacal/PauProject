@@ -19,7 +19,7 @@ export interface HeaderConfig {
 export class DashboardHeaderComponent {
   @Input() config: HeaderConfig = {
     pageType: 'company',
-    title: 'D&O Underwriting Dashboard - Ymabs Therapeutics',
+    title: 'D&O Underwriting Dashboard',
     showUploadIcon: true,
     backgroundColor: 'bg-gray-50',
     textColor: 'text-gray-600'

@@ -21,7 +21,9 @@ export class CompanyCompetitorsCard {
     { name: 'MacroGenics, Inc (MGNX)', ticker: 'MGNX', peerScore: 15.44, marketCap: 1098.8 },
     { name: 'Nutrx Therapeutics, Inc (NRIX)', ticker: 'NRIX', peerScore: 18.1, marketCap: 703.1 },
     { name: 'Vir Technology, Inc (VIR)', ticker: 'VIR', peerScore: 19.1, marketCap: 1448.9 },
-    { name: 'Relay Therapeutics, Inc (RLAY)', ticker: 'RLAY', peerScore: 19.52, marketCap: 1226.5 }
+    { name: 'Relay Therapeutics, Inc (RLAY)', ticker: 'RLAY', peerScore: 19.52, marketCap: 1226.5 },
+    { name: 'Scholar Rock Holding (SRPK)', ticker: 'SRPK', peerScore: 19.81, marketCap: 1198.3 },
+    { name: 'Ymab Therapeutics, Inc (YMAB)', ticker: 'YMAB', peerScore: 20.04, marketCap: 1800.0 }
   ];
 
   constructor() { }

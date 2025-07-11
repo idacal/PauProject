@@ -18,13 +18,16 @@
           *ngFor="let competitor of competitors; let i = index" 
           [class]="i % 2 === 0 ? 'bg-gray-50' : 'bg-white'"
           class="border-b border-gray-200 hover:bg-gray-100 transition-colors">
-          <td class="py-1.5 px-1.5 text-xs text-gray-700 text-center leading-tight">
+          <td class="py-1.5 px-1.5 text-xs text-gray-700 text-center leading-tight"
+              [class.font-bold]="competitor.name.includes('YMAB')">
             {{ competitor.name }}
           </td>
-          <td class="py-1.5 px-1.5 text-xs text-gray-700 text-center leading-tight">
+          <td class="py-1.5 px-1.5 text-xs text-gray-700 text-center leading-tight"
+              [class.font-bold]="competitor.name.includes('YMAB')">
             {{ competitor.peerScore }}
           </td>
-          <td class="py-1.5 px-1.5 text-xs text-gray-700 text-center leading-tight">
+          <td class="py-1.5 px-1.5 text-xs text-gray-700 text-center leading-tight"
+              [class.font-bold]="competitor.name.includes('YMAB')">
             {{ competitor.marketCap }}
           </td>
         </tr>

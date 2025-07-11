@@ -1,0 +1,22 @@
+<div class="bg-white rounded-lg shadow-md p-4 h-40 flex flex-col">
+  <h3 class="text-base font-semibold text-gray-800 mb-2">Industry Restrictions</h3>
+  
+  <div class="flex-1">
+    <table class="w-full">
+      <!-- Body -->
+      <tbody>
+        <tr 
+          *ngFor="let restriction of restrictions; let i = index" 
+          [class]="i % 2 === 0 ? 'bg-gray-50' : 'bg-white'"
+          class="border-b border-gray-200">
+          <td class="py-1 px-2 text-xs text-gray-700 leading-tight font-semibold">
+            {{ restriction.restriction }}
+          </td>
+          <td class="py-1 px-2 text-xs font-medium text-right leading-tight" [ngClass]="restriction.statusColor">
+            {{ restriction.status }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div> 

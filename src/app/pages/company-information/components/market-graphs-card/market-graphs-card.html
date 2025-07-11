@@ -1,16 +1,17 @@
 <div class="bg-white p-6 rounded-lg shadow-md h-80 flex flex-col">
   <div class="flex justify-between items-center mb-4">
     <h3 class="text-lg font-semibold text-blue-700">Market Graphs</h3>
-    <div class="flex items-center bg-gray-100 rounded-lg p-0.5 text-sm">
+    <div class="relative flex items-center rounded-full p-0 text-xs overflow-hidden" 
+         [style.background]="activeChart === 'sharePrice' ? 'linear-gradient(to right, #1f2937 0%, #1f2937 50%, #3b82f6 50%, #3b82f6 100%)' : 'linear-gradient(to right, #3b82f6 0%, #3b82f6 50%, #1f2937 50%, #1f2937 100%)'">
       <button 
         (click)="switchChart('sharePrice')"
-        [class]="activeChart === 'sharePrice' ? 'px-3 py-1.5 rounded-md bg-blue-600 text-white font-medium shadow-sm' : 'px-3 py-1.5 rounded-md bg-black text-white font-medium'"
+        class="px-3 py-1.5 rounded-full text-white font-medium transition-all duration-300 z-10 relative"
       >
         Share Price
       </button>
       <button 
         (click)="switchChart('marketCap')"
-        [class]="activeChart === 'marketCap' ? 'px-3 py-1.5 rounded-md bg-blue-600 text-white font-medium shadow-sm' : 'px-3 py-1.5 rounded-md bg-black text-white font-medium'"
+        class="px-3 py-1.5 rounded-full text-white font-medium transition-all duration-300 z-10 relative"
       >
         Market Cap
       </button>

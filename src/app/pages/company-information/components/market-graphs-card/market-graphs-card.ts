@@ -26,13 +26,11 @@ export class MarketGraphsCard implements OnInit, AfterViewInit {
 
   switchChart(chartType: 'sharePrice' | 'marketCap'): void {
     this.activeChart = chartType;
-    this.updateChartVisibility();
   }
 
   private initializeCharts(): void {
     this.createSharePriceChart();
     this.createMarketCapChart();
-    this.updateChartVisibility();
   }
 
   private createSharePriceChart(): void {
@@ -147,20 +145,7 @@ export class MarketGraphsCard implements OnInit, AfterViewInit {
     }
   }
 
-  private updateChartVisibility(): void {
-    const shareChartCanvas = document.getElementById('sharePriceChart') as HTMLCanvasElement;
-    const marketCapChartCanvas = document.getElementById('marketCapChart') as HTMLCanvasElement;
-    
-    if (shareChartCanvas && marketCapChartCanvas) {
-      if (this.activeChart === 'sharePrice') {
-        shareChartCanvas.style.display = 'block';
-        marketCapChartCanvas.style.display = 'none';
-      } else {
-        shareChartCanvas.style.display = 'none';
-        marketCapChartCanvas.style.display = 'block';
-      }
-    }
-  }
+
 
   ngOnDestroy(): void {
     if (this.shareChart) {

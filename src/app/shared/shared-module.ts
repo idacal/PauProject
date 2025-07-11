@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DashboardHeaderComponent } from './dashboard-header/dashboard-header.component';
 import { NavigationTabsComponent } from './navigation-tabs/navigation-tabs.component';
+import { CompanyNameBarComponent } from './company-name-bar/company-name-bar.component';
 
 @NgModule({
   declarations: [
     DashboardHeaderComponent,
-    NavigationTabsComponent
+    NavigationTabsComponent,
+    CompanyNameBarComponent
   ],
   imports: [
     CommonModule,
@@ -15,7 +17,8 @@ import { NavigationTabsComponent } from './navigation-tabs/navigation-tabs.compo
   ],
   exports: [
     DashboardHeaderComponent,
-    NavigationTabsComponent
+    NavigationTabsComponent,
+    CompanyNameBarComponent
   ]
 })
 export class SharedModule { }

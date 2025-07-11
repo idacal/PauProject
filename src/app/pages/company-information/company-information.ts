@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HeaderConfig } from '../../shared/dashboard-header/dashboard-header.component';
+import { CompanyBarConfig } from '../../shared/company-name-bar/company-name-bar.component';
 import { TabItem, DropdownOption } from '../../shared/navigation-tabs/navigation-tabs.component';
 
 @Component({
@@ -15,20 +16,25 @@ export class CompanyInformation {
   public headerConfig: HeaderConfig = {
     pageType: 'company',
     title: 'D&O Underwriting Dashboard',
-    subtitle: 'Ymabs Therapeutics',
     showUploadIcon: true,
     backgroundColor: 'bg-gray-50',
     textColor: 'text-gray-600'
   };
 
+  public companyBarConfig: CompanyBarConfig = {
+    companyName: 'Ymabs Therapeutics',
+    showBar: true
+  };
+
   public tabs: TabItem[] = [
     { id: 'company-information', label: 'Company Information' },
-    { id: 'market-information', label: 'Market Information' },
-    { id: 'financial-condition', label: 'Financial Condition' },
+    { id: 'market-information', label: 'Market Information', hasCheckmark: true },
+    { id: 'financial-condition', label: 'Financial Condition', hasCheckmark: true },
     { 
       id: 'do-dropdown', 
       label: 'D&O', 
       isDropdown: true,
+      hasCheckmark: true,
       dropdownOptions: [
         { id: 'governance', label: 'Governance' },
         { id: 'litigation', label: 'Litigation & M.E' },

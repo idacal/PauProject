@@ -2,6 +2,9 @@
   <!-- Dashboard Header -->
   <app-dashboard-header [config]="headerConfig"></app-dashboard-header>
 
+  <!-- Company Name Bar -->
+  <app-company-name-bar [config]="companyBarConfig"></app-company-name-bar>
+
   <!-- Dashboard Tabs -->
   <app-navigation-tabs 
     [tabs]="tabs" 
@@ -13,24 +16,30 @@
   <div class="container mx-auto p-4 sm:p-6 lg:p-8">
     
     <!-- Company Information Tab Content -->
-    <div *ngIf="activeTab === 'company-information'" class="space-y-6">
+    <div *ngIf="activeTab === 'company-information'" class="space-y-3">
       
       <!-- Row 1: Company Information + Financial Information -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
         <app-company-info-card class="h-80"></app-company-info-card>
         <app-financial-info-card class="h-80"></app-financial-info-card>
       </div>
       
       <!-- Row 2: Market Information + Market Graphs -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
         <app-market-info-card class="h-80"></app-market-info-card>
         <app-market-graphs-card class="h-80"></app-market-graphs-card>
       </div>
       
-      <!-- Row 3: Company's Competitors + News Feed -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <app-company-competitors-card class="h-80"></app-company-competitors-card>
-        <app-latest-news-card class="h-80"></app-latest-news-card>
+      <!-- Row 3: Left column (Competitors + Restrictions) + Right column (News Feed) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+        <!-- Left Column: Competitors + Industry Restrictions -->
+        <div class="flex flex-col gap-3">
+          <app-company-competitors-card class="h-80"></app-company-competitors-card>
+          <app-industry-restrictions-card class="h-40"></app-industry-restrictions-card>
+        </div>
+        
+        <!-- Right Column: News Feed (taller to match left column) -->
+        <app-latest-news-card class="h-[30.75rem]"></app-latest-news-card>
       </div>
       
     </div>

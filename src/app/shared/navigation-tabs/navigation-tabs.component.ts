@@ -5,6 +5,7 @@ export interface TabItem {
   label: string;
   isDropdown?: boolean;
   dropdownOptions?: DropdownOption[];
+  hasCheckmark?: boolean;
 }
 
 export interface DropdownOption {

@@ -1,71 +1,117 @@
-<div class="bg-white p-6 rounded-lg shadow-md h-80">
+<div class="bg-white p-6 rounded-lg shadow-md h-80 flex flex-col">
   <h3 class="text-lg font-semibold text-gray-800 mb-4">Financial Information</h3>
-  <table class="w-full text-sm">
-    <thead>
-      <tr class="text-left text-gray-500">
-        <th class="py-2"></th>
-        <th class="py-2"></th>
-        <th class="py-2"></th>
-        <th class="py-2 font-semibold">Current</th>
-        <th class="py-2 font-semibold">Sector</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="py-2 pr-2"><div class="w-4 h-4 rounded-full border border-gray-500 text-gray-500 flex items-center justify-center text-xs" title="Tooltip de Revenue">i</div></td>
-        <td class="py-2 pr-2 font-bold text-gray-700">Revenue</td>
-        <td class="py-2 pr-2">
-          <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
-          </svg>
-        </td>
-        <td class="py-2 font-normal">87.79</td>
-        <td class="py-2 font-normal">61.39</td>
-      </tr>
-      <tr>
-        <td class="py-2 pr-2"><div class="w-4 h-4 rounded-full border border-gray-500 text-gray-500 flex items-center justify-center text-xs" title="Tooltip de Net Income">i</div></td>
-        <td class="py-2 pr-2 font-bold text-gray-700">Net Income</td>
-        <td class="py-2 pr-2">
-          <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
-          </svg>
-        </td>
-        <td class="py-2 font-normal">5.27</td>
-        <td class="py-2 font-normal">4.2</td>
-      </tr>
-      <tr>
-        <td class="py-2 pr-2"><div class="w-4 h-4 rounded-full border border-gray-500 text-gray-500 flex items-center justify-center text-xs" title="Tooltip de Total Assets">i</div></td>
-        <td class="py-2 pr-2 font-bold text-gray-700">Total Assets</td>
-        <td class="py-2 pr-2">
-          <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
-          </svg>
-        </td>
-        <td class="py-2 font-normal">5.27</td>
-        <td class="py-2 font-normal">4.2</td>
-      </tr>
-      <tr>
-        <td class="py-2 pr-2"><div class="w-4 h-4 rounded-full border border-gray-500 text-gray-500 flex items-center justify-center text-xs" title="Tooltip de Current Assets">i</div></td>
-        <td class="py-2 pr-2 font-bold text-gray-700">Current Assets</td>
-        <td class="py-2 pr-2">
-          <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
-          </svg>
-        </td>
-        <td class="py-2 font-normal">5.27</td>
-        <td class="py-2 font-normal">4.2</td>
-      </tr>
-      <tr>
-        <td class="py-2 pr-2"><div class="w-4 h-4 rounded-full border border-gray-500 text-gray-500 flex items-center justify-center text-xs" title="Tooltip de Total Liabilities">i</div></td>
-        <td class="py-2 pr-2 font-bold text-gray-700">Total Liabilities</td>
-        <td class="py-2 pr-2">
-          <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 13l-5 5m0 0l-5-5m5 5V6"></path>
-          </svg>
-        </td>
-        <td class="py-2 font-normal">0.72</td>
-        <td class="py-2 font-normal">0.21</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="overflow-y-auto flex-1">
+    <table class="w-full text-sm">
+      <thead>
+        <tr class="text-left text-gray-500">
+          <th class="py-2"></th>
+          <th class="py-2"></th>
+          <th class="py-2"></th>
+          <th class="py-2 font-semibold">Current</th>
+          <th class="py-2 font-semibold">Sector</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="py-2 pr-2"><div class="w-4 h-4 rounded-full border border-gray-500 text-gray-500 flex items-center justify-center text-xs" title="Tooltip de Revenue">i</div></td>
+          <td class="py-2 pr-2 font-bold text-gray-700">Revenue</td>
+          <td class="py-2 pr-2">
+            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
+            </svg>
+          </td>
+          <td class="py-2 font-normal">87.79</td>
+          <td class="py-2 font-normal">61.39</td>
+        </tr>
+        <tr>
+          <td class="py-2 pr-2"><div class="w-4 h-4 rounded-full border border-gray-500 text-gray-500 flex items-center justify-center text-xs" title="Tooltip de Net Income">i</div></td>
+          <td class="py-2 pr-2 font-bold text-gray-700">Net Income</td>
+          <td class="py-2 pr-2">
+            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
+            </svg>
+          </td>
+          <td class="py-2 font-normal">5.27</td>
+          <td class="py-2 font-normal">4.2</td>
+        </tr>
+        <tr>
+          <td class="py-2 pr-2"><div class="w-4 h-4 rounded-full border border-gray-500 text-gray-500 flex items-center justify-center text-xs" title="Tooltip de Total Assets">i</div></td>
+          <td class="py-2 pr-2 font-bold text-gray-700">Total Assets</td>
+          <td class="py-2 pr-2">
+            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
+            </svg>
+          </td>
+          <td class="py-2 font-normal">5.27</td>
+          <td class="py-2 font-normal">4.2</td>
+        </tr>
+        <tr>
+          <td class="py-2 pr-2"><div class="w-4 h-4 rounded-full border border-gray-500 text-gray-500 flex items-center justify-center text-xs" title="Tooltip de Current Assets">i</div></td>
+          <td class="py-2 pr-2 font-bold text-gray-700">Current Assets</td>
+          <td class="py-2 pr-2">
+            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
+            </svg>
+          </td>
+          <td class="py-2 font-normal">5.27</td>
+          <td class="py-2 font-normal">4.2</td>
+        </tr>
+        <tr>
+          <td class="py-2 pr-2"><div class="w-4 h-4 rounded-full border border-gray-500 text-gray-500 flex items-center justify-center text-xs" title="Tooltip de Total Liabilities">i</div></td>
+          <td class="py-2 pr-2 font-bold text-gray-700">Total Liabilities</td>
+          <td class="py-2 pr-2">
+            <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 13l-5 5m0 0l-5-5m5 5V6"></path>
+            </svg>
+          </td>
+          <td class="py-2 font-normal">0.72</td>
+          <td class="py-2 font-normal">0.21</td>
+        </tr>
+        <tr>
+          <td class="py-2 pr-2"><div class="w-4 h-4 rounded-full border border-gray-500 text-gray-500 flex items-center justify-center text-xs" title="Tooltip de Total Equity">i</div></td>
+          <td class="py-2 pr-2 font-bold text-gray-700">Total Equity</td>
+          <td class="py-2 pr-2">
+            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
+            </svg>
+          </td>
+          <td class="py-2 font-normal">5.27</td>
+          <td class="py-2 font-normal">4.2</td>
+        </tr>
+        <tr>
+          <td class="py-2 pr-2"><div class="w-4 h-4 rounded-full border border-gray-500 text-gray-500 flex items-center justify-center text-xs" title="Tooltip de Working Capital">i</div></td>
+          <td class="py-2 pr-2 font-bold text-gray-700">Working Capital</td>
+          <td class="py-2 pr-2">
+            <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 13l-5 5m0 0l-5-5m5 5V6"></path>
+            </svg>
+          </td>
+          <td class="py-2 font-normal">0.72</td>
+          <td class="py-2 font-normal">0.21</td>
+        </tr>
+        <tr>
+          <td class="py-2 pr-2"><div class="w-4 h-4 rounded-full border border-gray-500 text-gray-500 flex items-center justify-center text-xs" title="Tooltip de FHR Score">i</div></td>
+          <td class="py-2 pr-2 font-bold text-gray-700">FHR Score</td>
+          <td class="py-2 pr-2">
+            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
+            </svg>
+          </td>
+          <td class="py-2 font-normal">57.0</td>
+          <td class="py-2 font-normal">49.0</td>
+        </tr>
+        <tr>
+          <td class="py-2 pr-2"><div class="w-4 h-4 rounded-full border border-gray-500 text-gray-500 flex items-center justify-center text-xs" title="Tooltip de CreditSafe Score">i</div></td>
+          <td class="py-2 pr-2 font-bold text-gray-700">CreditSafe Score</td>
+          <td class="py-2 pr-2">
+            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
+            </svg>
+          </td>
+          <td class="py-2 font-normal">63.0</td>
+          <td class="py-2 font-normal">56.0</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

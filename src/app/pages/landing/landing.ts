@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
@@ -19,8 +19,12 @@ interface MenuTab {
   styleUrl: './landing.scss'
 })
 export class Landing {
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+  
   public searchForm: FormGroup;
   public files: NgxFileDropEntry[] = [];
+  public uploadedFiles: File[] = [];
+  public isDragOver: boolean = false;
   
   public headerConfig: HeaderConfig = {
     pageType: 'landing',
@@ -93,11 +97,19 @@ export class Landing {
   }
 
   public dropped(files: any) {
+    console.log('Files dropped:', files);
+    this.isDragOver = false; // Reset drag state
     this.files = files;
+    
     for (const droppedFile of files) {
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
+          // Check if file is already in the list
+          if (!this.uploadedFiles.find(f => f.name === file.name && f.size === file.size)) {
+            this.uploadedFiles.push(file);
+            console.log('File added via drag & drop:', file.name);
+          }
           console.log(droppedFile.relativePath, file);
         });
       } else {
@@ -107,12 +119,94 @@ export class Landing {
     }
   }
 
+  public onFileSelected(event: any) {
+    console.log('Files selected via file picker:', event.target.files.length);
+    const files: FileList = event.target.files;
+    
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      // Check if file is already in the list
+      if (!this.uploadedFiles.find(f => f.name === file.name && f.size === file.size)) {
+        this.uploadedFiles.push(file);
+        console.log('File added via file picker:', file.name);
+      } else {
+        console.log('File already exists, skipping:', file.name);
+      }
+    }
+    
+    console.log('Total uploaded files:', this.uploadedFiles.length);
+    // Clear the input
+    event.target.value = '';
+  }
+
+  public formatFileSize(bytes: number): string {
+    const kb = bytes / 1024;
+    return (Math.round(kb * 100) / 100).toString();
+  }
+
+  public removeFile(index: number) {
+    this.uploadedFiles.splice(index, 1);
+  }
+
+  public openFilePicker() {
+    console.log('Opening file picker...');
+    if (this.fileInput && this.fileInput.nativeElement) {
+      this.fileInput.nativeElement.click();
+    } else {
+      console.error('File input element not found');
+    }
+  }
+
+  // Native HTML5 drag and drop handlers
+  public onDragOver(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver = true;
+    console.log('Native dragover event');
+  }
+
+  public onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver = false;
+    console.log('Native dragleave event');
+  }
+
+  public onDrop(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver = false;
+    console.log('Native drop event');
+    
+    const files = event.dataTransfer?.files;
+    if (files) {
+      this.handleFiles(files);
+    }
+  }
+
+  private handleFiles(files: FileList) {
+    console.log('Handling files via native drop:', files.length);
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      // Check if file is already in the list
+      if (!this.uploadedFiles.find(f => f.name === file.name && f.size === file.size)) {
+        this.uploadedFiles.push(file);
+        console.log('File added via native drop:', file.name);
+      } else {
+        console.log('File already exists, skipping:', file.name);
+      }
+    }
+    console.log('Total uploaded files:', this.uploadedFiles.length);
+  }
+
   public fileOver(event: any){
-    console.log(event);
+    console.log('File over:', event);
+    this.isDragOver = true;
   }
 
   public fileLeave(event: any){
-    console.log(event);
+    console.log('File leave:', event);
+    this.isDragOver = false;
   }
 
   public toggleInsuranceDropdown() {

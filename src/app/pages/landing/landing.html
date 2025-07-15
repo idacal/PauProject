@@ -143,26 +143,53 @@
               <p class="mb-2">
                 <span class="font-medium text-blue-600">Drag & Drop your documents here or Browse</span>
               </p>
-              <p class="text-xs text-gray-500">Supported files: .xlsx, .xlsm, .docx, .pdf, .pptx and .pdf (including password protected files)</p>
+              <p class="text-xs text-gray-500">Supported files: .xls, .xlsm, .docx, .odt, .pptx and .pdf (including password protected files)</p>
               <p class="text-xs text-gray-500">Word and excel (all extensions) password protected files as well as .msg files are not supported</p>
             </div>
-            <input #fileInput type="file" multiple accept=".xlsx,.xlsm,.docx,.pdf,.pptx" class="hidden" (change)="onFileSelected($event)">
+            <input #fileInput type="file" multiple accept=".xls,.xlsm,.docx,.odt,.pptx,.pdf" class="hidden" (change)="onFileSelected($event)">
           </div>
           
           <!-- File List -->
           <div *ngIf="uploadedFiles.length > 0" class="mt-4 bg-gray-50 rounded-lg p-4">
-            <div *ngFor="let file of uploadedFiles; let i = index" class="flex items-center justify-between py-3 px-4 bg-white rounded-lg mb-2 last:mb-0 border">
-              <div class="flex items-center flex-1">
+            <div *ngFor="let file of uploadedFiles; let i = index; trackBy: trackByFileName" 
+                 class="flex items-center justify-between py-3 px-4 bg-white rounded-lg mb-2 last:mb-0 border file-item transition-all duration-300 ease-in-out">
+              <div class="flex items-center flex-1 min-w-0">
                 <!-- File Icon -->
                 <div class="flex-shrink-0 mr-3">
-                  <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                  </svg>
+                  <ng-container [ngSwitch]="getFileType(file.name)">
+                    <!-- PDF Icon -->
+                    <svg *ngSwitchCase="'pdf'" class="w-8 h-8 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                    </svg>
+                    
+                    <!-- Excel Icon -->
+                    <svg *ngSwitchCase="'excel'" class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                      <path d="M9.5,13L8,15.5L9.5,18H11L12.5,15.5L11,13H9.5M13,13V18H15V13H13Z"/>
+                    </svg>
+                    
+                    <!-- Word Icon -->
+                    <svg *ngSwitchCase="'word'" class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                      <path d="M7,13L8.5,18H10L11,15L12,18H13.5L15,13H13.75L13,15.5L12,13H10L9,15.5L8.25,13H7Z"/>
+                    </svg>
+                    
+                    <!-- PowerPoint Icon -->
+                    <svg *ngSwitchCase="'powerpoint'" class="w-8 h-8 text-orange-500" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                      <path d="M8,13V18H9.5V16H11C12.1,16 13,15.1 13,14S12.1,12 11,12H8M9.5,13.5H11C11.3,13.5 11.5,13.7 11.5,14S11.3,14.5 11,14.5H9.5V13.5Z"/>
+                    </svg>
+                    
+                    <!-- Default Document Icon -->
+                    <svg *ngSwitchDefault class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                  </ng-container>
                 </div>
                 
                 <!-- File Info -->
                 <div class="flex-1 min-w-0">
-                  <p class="text-sm font-medium text-gray-900 truncate">{{ file.name }}</p>
+                  <p class="text-sm font-medium text-gray-900 truncate" [title]="file.name">{{ truncateFileName(file.name, 45) }}</p>
                   <p class="text-xs text-gray-500">{{ formatFileSize(file.size) }} KB</p>
                 </div>
                 
@@ -175,7 +202,7 @@
               </div>
               
               <!-- Delete Button -->
-              <button type="button" (click)="removeFile(i)" class="flex-shrink-0 ml-4 text-red-500 hover:text-red-700">
+              <button type="button" (click)="removeFileWithAnimation(i)" class="flex-shrink-0 ml-4 text-red-500 hover:text-red-700 transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                 </svg>

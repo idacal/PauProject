@@ -105,10 +105,16 @@ export class Landing {
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
-          // Check if file is already in the list
-          if (!this.uploadedFiles.find(f => f.name === file.name && f.size === file.size)) {
-            this.uploadedFiles.push(file);
-            console.log('File added via drag & drop:', file.name);
+          // Validate file type
+          if (this.isValidFileType(file)) {
+            // Check if file is already in the list
+            if (!this.uploadedFiles.find(f => f.name === file.name && f.size === file.size)) {
+              this.uploadedFiles.push(file);
+              console.log('File added via drag & drop:', file.name);
+            }
+          } else {
+            console.log('Invalid file type dropped, skipping:', file.name);
+            alert(`File type not supported: ${file.name}. Please upload only .xls, .xlsm, .docx, .odt, .pptx, or .pdf files.`);
           }
           console.log(droppedFile.relativePath, file);
         });
@@ -125,12 +131,18 @@ export class Landing {
     
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      // Check if file is already in the list
-      if (!this.uploadedFiles.find(f => f.name === file.name && f.size === file.size)) {
-        this.uploadedFiles.push(file);
-        console.log('File added via file picker:', file.name);
+      // Validate file type
+      if (this.isValidFileType(file)) {
+        // Check if file is already in the list
+        if (!this.uploadedFiles.find(f => f.name === file.name && f.size === file.size)) {
+          this.uploadedFiles.push(file);
+          console.log('File added via file picker:', file.name);
+        } else {
+          console.log('File already exists, skipping:', file.name);
+        }
       } else {
-        console.log('File already exists, skipping:', file.name);
+        console.log('Invalid file type, skipping:', file.name);
+        alert(`File type not supported: ${file.name}. Please upload only .xls, .xlsm, .docx, .odt, .pptx, or .pdf files.`);
       }
     }
     
@@ -142,10 +154,6 @@ export class Landing {
   public formatFileSize(bytes: number): string {
     const kb = bytes / 1024;
     return (Math.round(kb * 100) / 100).toString();
-  }
-
-  public removeFile(index: number) {
-    this.uploadedFiles.splice(index, 1);
   }
 
   public openFilePicker() {
@@ -188,15 +196,72 @@ export class Landing {
     console.log('Handling files via native drop:', files.length);
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      // Check if file is already in the list
-      if (!this.uploadedFiles.find(f => f.name === file.name && f.size === file.size)) {
-        this.uploadedFiles.push(file);
-        console.log('File added via native drop:', file.name);
+      // Validate file type
+      if (this.isValidFileType(file)) {
+        // Check if file is already in the list
+        if (!this.uploadedFiles.find(f => f.name === file.name && f.size === file.size)) {
+          this.uploadedFiles.push(file);
+          console.log('File added via native drop:', file.name);
+        } else {
+          console.log('File already exists, skipping:', file.name);
+        }
       } else {
-        console.log('File already exists, skipping:', file.name);
+        console.log('Invalid file type, skipping:', file.name);
+        alert(`File type not supported: ${file.name}. Please upload only .xls, .xlsm, .docx, .odt, .pptx, or .pdf files.`);
       }
     }
     console.log('Total uploaded files:', this.uploadedFiles.length);
+  }
+
+  public isValidFileType(file: File): boolean {
+    const validExtensions = ['.xls', '.xlsm', '.docx', '.odt', '.pptx', '.pdf'];
+    const fileName = file.name.toLowerCase();
+    return validExtensions.some(ext => fileName.endsWith(ext));
+  }
+
+  public getFileType(fileName: string): string {
+    const extension = fileName.toLowerCase().split('.').pop();
+    
+    switch (extension) {
+      case 'pdf':
+        return 'pdf';
+      case 'xls':
+      case 'xlsm':
+        return 'excel';
+      case 'docx':
+      case 'odt':
+        return 'word';
+      case 'pptx':
+        return 'powerpoint';
+      default:
+        return 'document';
+    }
+  }
+
+  public truncateFileName(fileName: string, maxLength: number): string {
+    if (fileName.length <= maxLength) {
+      return fileName;
+    }
+    
+    const extension = fileName.split('.').pop();
+    const nameWithoutExt = fileName.substring(0, fileName.lastIndexOf('.'));
+    const truncatedName = nameWithoutExt.substring(0, maxLength - extension!.length - 4) + '...';
+    
+    return truncatedName + '.' + extension;
+  }
+
+  public trackByFileName(index: number, file: File): string {
+    return file.name + file.size;
+  }
+
+  public removeFile(index: number) {
+    this.uploadedFiles.splice(index, 1);
+  }
+
+  public removeFileWithAnimation(index: number) {
+    // For now, just remove the file directly
+    // TODO: Add fade-out animation
+    this.removeFile(index);
   }
 
   public fileOver(event: any){

@@ -14,6 +14,7 @@ import { FormComponent } from './form/form.component';
   imports: [
     BrowserModule,
     FormsModule, // for ngModel & NgForm
+    AppRoutingModule,
   ],
   bootstrap: [App],
 })

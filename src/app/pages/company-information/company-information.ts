@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { HeaderConfig } from '../../shared/dashboard-header/dashboard-header.component';
 import { CompanyBarConfig } from '../../shared/company-name-bar/company-name-bar.component';
 import { TabItem, DropdownOption } from '../../shared/navigation-tabs/navigation-tabs.component';
+import { DASHBOARD_TABS } from '../../shared/navigation-tabs/navigation-tabs.config';
+import { ApiService } from '../../api.service';
 
 @Component({
   selector: 'app-company-information',
@@ -10,8 +13,10 @@ import { TabItem, DropdownOption } from '../../shared/navigation-tabs/navigation
   templateUrl: './company-information.html',
   styleUrl: './company-information.scss'
 })
-export class CompanyInformation {
+export class CompanyInformation implements OnInit, OnDestroy {
   public activeTab: string = 'company-information';
+  private companyInfoSubscription?: Subscription;
+  public companyData: any = null;
   
   public headerConfig: HeaderConfig = {
     pageType: 'company',
@@ -22,37 +27,40 @@ export class CompanyInformation {
   };
 
   public companyBarConfig: CompanyBarConfig = {
-    companyName: 'Ymabs Therapeutics',
+    companyName: 'Loading...', // Will be updated from API data
     showBar: true
   };
 
-  public tabs: TabItem[] = [
-    { id: 'company-information', label: 'Company Information' },
-    { id: 'market-information', label: 'Market Information', hasCheckmark: true },
-    { id: 'financial-condition', label: 'Financial Condition', hasCheckmark: true },
-    { 
-      id: 'do-dropdown', 
-      label: 'D&O', 
-      isDropdown: true,
-      hasCheckmark: true,
-      dropdownOptions: [
-        { id: 'governance', label: 'Governance' },
-        { id: 'litigation', label: 'Litigation & M.E' },
-        { id: 'nature-business', label: 'Nature of Business' },
-        { id: 'loss-probability', label: 'Loss Probability Model' }
-      ]
-    },
-    { 
-      id: 'overall-summary-dropdown', 
-      label: 'Overall Summary', 
-      isDropdown: true,
-      dropdownOptions: [
-        { id: 'overall-summary', label: 'D&O Summary' }
-      ]
-    }
-  ];
+  public tabs: TabItem[] = DASHBOARD_TABS;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private apiService: ApiService) {}
+
+  ngOnInit() {
+    // Subscribe to company info from the assessment
+    this.companyInfoSubscription = this.apiService.companyInfo$.subscribe(data => {
+      if (data) {
+        console.log('Received company data:', data);
+        this.companyData = data;
+        
+        // Update company name in the bar if available
+        if (data.company && data.company.name) {
+          this.companyBarConfig.companyName = data.company.name;
+        } else if (data.name) {
+          this.companyBarConfig.companyName = data.name;
+        }
+      } else {
+        // If no data, redirect back to landing
+        console.log('No company data available, redirecting to landing');
+        this.router.navigate(['/']);
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.companyInfoSubscription) {
+      this.companyInfoSubscription.unsubscribe();
+    }
+  }
 
   switchTab(tabId: string): void {
     this.activeTab = tabId;

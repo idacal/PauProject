@@ -6,6 +6,7 @@ export interface TabItem {
   isDropdown?: boolean;
   dropdownOptions?: DropdownOption[];
   hasCheckmark?: boolean;
+  disabled?: boolean;
 }
 
 export interface DropdownOption {
@@ -29,6 +30,12 @@ export class NavigationTabsComponent {
 
   onTabClick(tabId: string, buttonElement?: HTMLElement): void {
     const tab = this.tabs.find(t => t.id === tabId);
+    
+    // Don't do anything if tab is disabled
+    if (tab?.disabled) {
+      return;
+    }
+    
     if (tab?.isDropdown) {
       if (this.openDropdownId === tabId) {
         // Close dropdown
@@ -99,6 +106,11 @@ export class NavigationTabsComponent {
   getTabClasses(tabId: string): string {
     const tab = this.tabs.find(t => t.id === tabId);
     const isDropdownParent = tab?.isDropdown && tab.dropdownOptions?.some(opt => opt.id === this.activeTab);
+    
+    // Handle disabled tabs
+    if (tab?.disabled) {
+      return 'border-transparent text-gray-500';
+    }
     
     if (this.isActiveTab(tabId) || isDropdownParent) {
       return 'border-blue-500 text-blue-600 bg-white shadow-sm';

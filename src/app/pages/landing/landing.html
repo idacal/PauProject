@@ -4,23 +4,12 @@
 <!-- Company Name Bar -->
 <app-company-name-bar [config]="companyBarConfig"></app-company-name-bar>
 
-<!-- Menu Tabs (Disabled) -->
-<div class="bg-gray-200 border-b border-gray-300">
-  <div class="px-1">
-    <nav class="flex space-x-8 overflow-x-auto">
-      <button
-        *ngFor="let tab of menuTabs"
-        [disabled]="tab.disabled"
-        class="whitespace-nowrap py-4 px-4 border-b-2 border-transparent text-gray-500 font-medium text-sm cursor-not-allowed hover:text-gray-600 transition-colors"
-      >
-        {{ tab.label }}
-        <svg *ngIf="tab.isDropdown" class="w-4 h-4 ml-1 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-        </svg>
-      </button>
-    </nav>
-  </div>
-</div>
+<!-- Navigation Tabs -->
+<app-navigation-tabs 
+  [tabs]="menuTabs" 
+  [activeTab]="'landing'" 
+  (tabChange)="onTabChange($event)">
+</app-navigation-tabs>
 
 <!-- Main Content -->
 <div class="bg-gray-100 min-h-screen">

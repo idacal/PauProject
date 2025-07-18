@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { HeaderConfig } from '../../shared/dashboard-header/dashboard-header.component';
 import { CompanyBarConfig } from '../../shared/company-name-bar/company-name-bar.component';
+import { ApiService } from '../../api.service';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 interface MenuTab {
   id: string;
@@ -26,6 +28,12 @@ export class Landing {
   public uploadedFiles: File[] = [];
   public isDragOver: boolean = false;
   
+  // API related properties
+  public companies: any[] = [];
+  public selectedCompany: any = null;
+  public availableIndustries: any[] = [];
+  public isSearching: boolean = false;
+  
   public headerConfig: HeaderConfig = {
     pageType: 'landing',
     title: 'Underwriting Dashboard',
@@ -39,12 +47,8 @@ export class Landing {
     showBar: true
   };
 
-  public companyOptions = [
-    'YMAB Therapeutics, Inc. / USA / YMAB',
-    'MarkerGenetics, Inc.  / USA / MRKR',
-    'VF Technology, Inc.  / USA / VFC',
-    'Senzar, Inc. / USA / SENZA'
-  ];
+  // This will be populated dynamically from API
+  public companyOptions: string[] = [];
 
   public insuranceOptions = [
     { value: 'D&O', label: 'D&O' },
@@ -53,11 +57,8 @@ export class Landing {
     { value: 'Crime', label: 'Crime' }
   ];
 
-  // Cambiar tickerOptions por hazardClassOptions
-  public hazardClassOptions = [
-    'Pharmaceutical',
-    'Healthcare',
-  ];
+  // This will be populated dynamically from API
+  public hazardClassOptions: string[] = [];
 
   // Agregar las pestañas del menú
   public menuTabs: MenuTab[] = [
@@ -79,12 +80,64 @@ export class Landing {
   public isInsuranceDropdownOpen = false;
   public selectedInsuranceTypes: string[] = ['D&O'];
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private apiService: ApiService) {
     this.searchForm = this.fb.group({
-      companyName: ['Ymab', Validators.required],
-      hazardClass: ['', Validators.required], // Cambiar ticker por hazardClass
+      companyName: ['', Validators.required],
+      hazardClass: ['', Validators.required],
       insuranceType: [['D&O'], [Validators.required, this.minLengthArray(1)]]
     });
+
+    // Subscribe to company name changes for search
+    this.searchForm.get('companyName')?.valueChanges
+      .pipe(
+        debounceTime(500), // Wait 500ms after user stops typing
+        distinctUntilChanged() // Only if the value actually changed
+      )
+      .subscribe(value => {
+        if (value && value.length >= 2) {
+          this.searchCompanies(value);
+        } else {
+          this.companies = [];
+          this.companyOptions = [];
+        }
+      });
+
+    // Subscribe to API items (companies)
+    this.apiService.items$.subscribe(companies => {
+      this.companies = companies;
+      this.updateCompanyOptions();
+      this.isSearching = false;
+    });
+  }
+
+  private searchCompanies(name: string) {
+    this.isSearching = true;
+    this.apiService.fetchByName(name);
+  }
+
+  private updateCompanyOptions() {
+    this.companyOptions = this.companies.map(company => 
+      `${company.name} / ${company.country} / ${company.ticker || 'N/A'}`
+    );
+  }
+
+  public onCompanySelect(companyOption: string) {
+    // Find the selected company from the companies array
+    const companyIndex = this.companyOptions.indexOf(companyOption);
+    if (companyIndex >= 0) {
+      this.selectedCompany = this.companies[companyIndex];
+      
+      // Update available industries from selected company
+      if (this.selectedCompany.naics && this.selectedCompany.naics.length > 0) {
+        this.availableIndustries = this.selectedCompany.naics;
+        this.hazardClassOptions = this.availableIndustries.map(industry => 
+          `${industry.label} (${industry.code})`
+        );
+        
+        // Reset hazard class selection
+        this.searchForm.get('hazardClass')?.setValue('');
+      }
+    }
   }
 
   private minLengthArray(min: number) {
@@ -315,14 +368,40 @@ export class Landing {
     }
   }
 
-  public submitAssessment() {
-    if (this.searchForm.valid) {
+  public async submitAssessment() {
+    if (this.searchForm.valid && this.selectedCompany) {
       console.log('Form Submitted', this.searchForm.value);
-      // Navigate to the company information dashboard
-      this.router.navigate(['/company-information']);
+      
+      // Find selected industry from hazard class
+      const selectedHazardClass = this.searchForm.value.hazardClass;
+      const selectedIndustry = this.availableIndustries.find(industry => 
+        selectedHazardClass.includes(industry.code)
+      );
+
+      if (selectedIndustry) {
+        try {
+          // Create assessment using the new API
+          await this.apiService.createAssessment(this.selectedCompany, selectedIndustry);
+          
+          // Update company name in the bar
+          this.companyBarConfig.companyName = this.selectedCompany.name;
+          
+          // Navigate to the company information dashboard
+          this.router.navigate(['/company-information']);
+        } catch (error) {
+          console.error('Error creating assessment:', error);
+          alert('Error creating assessment. Please try again.');
+        }
+      } else {
+        alert('Please select a valid hazard class/industry.');
+      }
     } else {
       // Mark all fields as touched to show validation errors
       this.searchForm.markAllAsTouched();
+      
+      if (!this.selectedCompany) {
+        alert('Please select a company from the search results.');
+      }
     }
   }
 }

@@ -1,0 +1,41 @@
+<form #f="ngForm" (ngSubmit)="onSubmit(f)">
+  <label>
+    Name:
+    <input
+      name="name"
+      type="text"
+      required
+      [(ngModel)]="name"
+      placeholder="Enter company name" />
+  </label>
+  <button type="submit" [disabled]="f.invalid">Submit</button>
+</form>
+
+<!-- <form #f="ngForm" (ngSubmit)="onSelection(f)"></form> -->
+<div *ngIf="items$ | async as items; length">
+  <label *ngIf="items.length">
+    Company:
+    <select [(ngModel)]="selectedItem" name="item">
+      <option *ngFor="let it of items" [ngValue]="it">
+        {{ it.name || it }}
+      </option>
+    </select>
+  </label>
+</div>
+
+<div *ngIf="selectedItem">
+  <h4>Category:</h4>
+  <label *ngIf="selectedItem.naics_code.length">
+    Pick an item:
+    <select [(ngModel)]="selectedItem.naics_code" name="category">
+      <option *ngFor="let cat of selectedItem.naics_code" [ngValue]="cat">
+        {{ cat }}
+      </option>
+    </select>
+  </label>
+</div>
+
+<!-- <div *ngIf="api.response$">
+  <h3>API Response:</h3>
+  <pre>{{ api.response | json }}</pre>
+</div> -->

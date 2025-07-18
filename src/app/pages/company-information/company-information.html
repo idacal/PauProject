@@ -1,113 +1,28 @@
-<div class="bg-gray-100 min-h-screen">
-  <!-- Dashboard Header -->
-  <app-dashboard-header [config]="headerConfig"></app-dashboard-header>
-
-  <!-- Company Name Bar -->
-  <app-company-name-bar [config]="companyBarConfig"></app-company-name-bar>
-
-  <!-- Dashboard Tabs -->
-  <app-navigation-tabs 
-    [tabs]="tabs" 
-    [activeTab]="activeTab" 
-    (tabChange)="switchTab($event)">
-  </app-navigation-tabs>
-
-  <!-- Content Area -->
-  <div class="p-1">
-    
-    <!-- Company Information Tab Content -->
-    <div *ngIf="activeTab === 'company-information'" class="space-y-3">
-      
-      <!-- Row 1: Company Information + Financial Information -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
-        <app-company-info-card class="h-80"></app-company-info-card>
-        <app-financial-info-card class="h-80"></app-financial-info-card>
-      </div>
-      
-      <!-- Row 2: Market Information + Market Graphs -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
-        <app-market-info-card class="h-80"></app-market-info-card>
-        <app-market-graphs-card class="h-80"></app-market-graphs-card>
-      </div>
-      
-      <!-- Row 3: Left column (Competitors + Restrictions) + Right column (News Feed) -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
-        <!-- Left Column: Competitors + Industry Restrictions -->
-        <div class="flex flex-col gap-3">
-          <app-company-competitors-card class="h-80"></app-company-competitors-card>
-          <app-industry-restrictions-card class="h-40"></app-industry-restrictions-card>
-        </div>
-        
-        <!-- Right Column: News Feed (taller to match left column) -->
-        <app-latest-news-card class="h-[30.75rem]"></app-latest-news-card>
-      </div>
-      
-    </div>
-
-    <!-- Placeholder Content for Other Tabs -->
-    <div *ngIf="activeTab !== 'company-information'" class="bg-white rounded-lg shadow-md p-8">
-      <div class="text-center">
-        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 mb-4">
-          <svg class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
-        </div>
-        <h3 class="text-lg font-medium text-gray-900 mb-2">{{ getCurrentTabLabel() }}</h3>
-        <p class="text-gray-500 mb-6">This section is currently under development. Content will be available soon.</p>
-        
-        <!-- Sample placeholder content based on tab -->
-        <div [ngSwitch]="activeTab">
-          
-          <!-- Market Information Placeholder -->
-          <div *ngSwitchCase="'market-information'" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-            <div class="bg-gray-50 p-4 rounded-lg">
-              <h4 class="font-medium text-gray-700 mb-2">Market Trends</h4>
-              <p class="text-gray-500 text-sm">Market analysis and trends will be displayed here.</p>
-            </div>
-            <div class="bg-gray-50 p-4 rounded-lg">
-              <h4 class="font-medium text-gray-700 mb-2">Competitor Analysis</h4>
-              <p class="text-gray-500 text-sm">Competitive landscape information will be shown here.</p>
-            </div>
-          </div>
-
-          <!-- Financial Condition Placeholder -->
-          <div *ngSwitchCase="'financial-condition'" class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-            <div class="bg-gray-50 p-4 rounded-lg">
-              <h4 class="font-medium text-gray-700 mb-2">Revenue</h4>
-              <p class="text-gray-500 text-sm">Revenue metrics and analysis</p>
-            </div>
-            <div class="bg-gray-50 p-4 rounded-lg">
-              <h4 class="font-medium text-gray-700 mb-2">Profitability</h4>
-              <p class="text-gray-500 text-sm">Profit margins and ratios</p>
-            </div>
-            <div class="bg-gray-50 p-4 rounded-lg">
-              <h4 class="font-medium text-gray-700 mb-2">Cash Flow</h4>
-              <p class="text-gray-500 text-sm">Cash flow statements</p>
-            </div>
-          </div>
-
-          <!-- Governance Placeholder -->
-          <div *ngSwitchCase="'governance'" class="mt-6">
-            <div class="bg-gray-50 p-6 rounded-lg">
-              <h4 class="font-medium text-gray-700 mb-4">Corporate Governance Structure</h4>
-              <div class="space-y-2">
-                <p class="text-gray-500 text-sm">• Board of Directors Information</p>
-                <p class="text-gray-500 text-sm">• Executive Compensation</p>
-                <p class="text-gray-500 text-sm">• Shareholder Rights</p>
-                <p class="text-gray-500 text-sm">• Audit Committee Details</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Default Placeholder -->
-          <div *ngSwitchDefault class="bg-gray-50 p-6 rounded-lg mt-6">
-            <h4 class="font-medium text-gray-700 mb-2">Coming Soon</h4>
-            <p class="text-gray-500 text-sm">Detailed information for this section will be available in future updates.</p>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
+<!-- Company Information Content -->
+<div class="p-1 space-y-3">
+  
+  <!-- Row 1: Company Information + Financial Information -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+    <app-company-info-card class="h-80"></app-company-info-card>
+    <app-financial-info-card class="h-80"></app-financial-info-card>
   </div>
+  
+  <!-- Row 2: Market Information + Market Graphs -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+    <app-market-info-card class="h-80"></app-market-info-card>
+    <app-market-graphs-card class="h-80"></app-market-graphs-card>
+  </div>
+  
+  <!-- Row 3: Left column (Competitors + Restrictions) + Right column (News Feed) -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+    <!-- Left Column: Competitors + Industry Restrictions -->
+    <div class="flex flex-col gap-3">
+      <app-company-competitors-card class="h-80"></app-company-competitors-card>
+      <app-industry-restrictions-card class="h-40"></app-industry-restrictions-card>
+    </div>
+    
+    <!-- Right Column: News Feed (taller to match left column) -->
+    <app-latest-news-card class="h-[30.75rem]"></app-latest-news-card>
+  </div>
+
 </div>

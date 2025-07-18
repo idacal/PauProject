@@ -46,7 +46,7 @@ export class DashboardHeaderComponent {
 
   onMenuClick() {
     // Load Assessment always goes to load-assessment page
-    this.router.navigate(['/load-assessment']);
+    this.router.navigate(['/dashboard/load-assessment']);
     this.menuClick.emit();
   }
 

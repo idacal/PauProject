@@ -1,136 +1,114 @@
-<div class="bg-gray-100 min-h-screen">
-  <!-- Dashboard Header -->
-  <app-dashboard-header [config]="headerConfig"></app-dashboard-header>
-
-  <!-- Company Name Bar -->
-  <app-company-name-bar [config]="companyBarConfig"></app-company-name-bar>
-
-  <!-- Navigation Tabs -->
-  <app-navigation-tabs 
-    [tabs]="tabs" 
-    [activeTab]="activeTab" 
-    (tabChange)="switchTab($event)">
-  </app-navigation-tabs>
-
-
-
-  <!-- Main Content -->
-  <div class="p-1">
-    
-    <!-- Page Header -->
-    <div class="mb-6">
-      <h2 class="text-3xl font-bold text-gray-900 mb-2">Load Assessment</h2>
-      <div class="flex justify-between items-center">
-        <div class="flex items-center space-x-4">
-          <div class="flex items-center space-x-2">
-            <label for="show" class="text-sm font-medium text-gray-700">Show</label>
-            <select id="show" class="border border-gray-300 rounded px-3 py-1 text-sm">
-              <option value="10">10</option>
-              <option value="25">25</option>
-              <option value="50">50</option>
-            </select>
-            <span class="text-sm text-gray-700">entries</span>
-          </div>
-          <button (click)="refreshAssessments()" 
-                  class="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-colors"
-                  [disabled]="isLoading">
-            <span *ngIf="!isLoading">Refresh</span>
-            <span *ngIf="isLoading">Loading...</span>
-          </button>
-        </div>
+<!-- Load Assessment Content -->
+<div class="p-1">
+  
+  <!-- Page Header -->
+  <div class="mb-6">
+    <h2 class="text-3xl font-bold text-gray-900 mb-2">Load Assessment</h2>
+    <div class="flex justify-between items-center">
+      <div class="flex items-center space-x-4">
         <div class="flex items-center space-x-2">
-          <span class="text-sm text-gray-500">Search:</span>
-          <input type="text" placeholder="" class="border border-gray-300 rounded px-3 py-1 text-sm w-32">
+          <label for="show" class="text-sm font-medium text-gray-700">Show</label>
+          <select id="show" class="border border-gray-300 rounded px-3 py-1 text-sm">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+          </select>
+          <span class="text-sm text-gray-700">entries</span>
         </div>
-      </div>
-    </div>
 
-    <!-- Error Message -->
-    <div *ngIf="error" class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-      {{ error }}
-    </div>
-
-    <!-- Loading Indicator -->
-    <div *ngIf="isLoading" class="mb-4 p-4 bg-blue-100 border border-blue-400 text-blue-700 rounded flex items-center">
-      <div class="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full border-t-transparent border-blue-500 mr-3" role="status"></div>
-      Loading assessments...
-    </div>
-
-    <!-- Assessment Table -->
-    <div class="bg-white rounded-lg shadow-md overflow-hidden">
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-blue-600">
-          <tr>
-            <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider w-16">#</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Company Names</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">LOB</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Last update</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Load</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Delete</th>
-          </tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
-          <!-- Show message when no assessments -->
-          <tr *ngIf="!isLoading && assessments.length === 0 && !error">
-            <td colspan="6" class="px-6 py-8 text-center text-sm text-gray-500">
-              No assessments found. <a (click)="navigateToSearch()" class="text-blue-600 hover:text-blue-800 cursor-pointer">Create a new assessment</a>.
-            </td>
-          </tr>
-          
-          <!-- Show assessments -->
-          <tr *ngFor="let assessment of assessments; let i = index" [class.bg-gray-50]="i % 2 === 1">
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-              {{ assessment.id || assessment._id || (i + 1) }}
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-              {{ assessment.company || assessment.data?.name || assessment.companyName || 'N/A' }}
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-              {{ assessment.lob || assessment.industry?.label || 'D&O' }}
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-              {{ formatDate(assessment.last_update) || formatDate(assessment.creation_date) || 'N/A' }}
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-              <button class="text-blue-600 hover:text-blue-800" 
-                      title="Load Assessment"
-                      (click)="loadAssessment(assessment)">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                </svg>
-              </button>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-              <button class="text-red-600 hover:text-red-800" 
-                      title="Delete Assessment"
-                      (click)="deleteAssessment(assessment)">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                </svg>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Pagination -->
-    <div class="mt-4 flex justify-between items-center">
-      <div class="text-sm text-gray-500">
-        Showing 1 to 4 of 4 entries
       </div>
       <div class="flex items-center space-x-2">
-        <button class="px-3 py-1 text-sm text-gray-500 border border-gray-300 rounded hover:bg-gray-50" disabled>
-          Previous
-        </button>
-        <button class="px-3 py-1 text-sm bg-blue-600 text-white border border-blue-600 rounded">
-          1
-        </button>
-        <button class="px-3 py-1 text-sm text-gray-500 border border-gray-300 rounded hover:bg-gray-50" disabled>
-          Next
-        </button>
+        <span class="text-sm text-gray-500">Search:</span>
+        <input type="text" placeholder="" class="border border-gray-300 rounded px-3 py-1 text-sm w-32">
       </div>
     </div>
-
   </div>
+
+  <!-- Error Message -->
+  <div *ngIf="error" class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+    {{ error }}
+  </div>
+
+  <!-- Loading Indicator -->
+  <div *ngIf="isLoading" class="mb-4 p-4 bg-blue-100 border border-blue-400 text-blue-700 rounded flex items-center">
+    <div class="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full border-t-transparent border-blue-500 mr-3" role="status"></div>
+    Loading assessments...
+  </div>
+
+  <!-- Assessment Table -->
+  <div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-blue-600">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider w-16">#</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Company Names</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">LOB</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Last update</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Load</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Delete</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <!-- Show message when no assessments -->
+        <tr *ngIf="!isLoading && assessments.length === 0 && !error">
+          <td colspan="6" class="px-6 py-8 text-center text-sm text-gray-500">
+            No assessments found. <a (click)="navigateToSearch()" class="text-blue-600 hover:text-blue-800 cursor-pointer">Create a new assessment</a>.
+          </td>
+        </tr>
+        
+        <!-- Show assessments -->
+        <tr *ngFor="let assessment of assessments; let i = index" [class.bg-gray-50]="i % 2 === 1">
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            {{ assessment.id || assessment._id || (i + 1) }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+            {{ assessment.company || assessment.data?.name || assessment.companyName || 'N/A' }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            {{ assessment.lob || assessment.industry?.label || 'D&O' }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            {{ formatDate(assessment.last_update) || formatDate(assessment.creation_date) || 'N/A' }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            <button class="text-blue-600 hover:text-blue-800" 
+                    title="Load Assessment"
+                    (click)="loadAssessment(assessment)">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+            </button>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            <button class="text-red-600 hover:text-red-800" 
+                    title="Delete Assessment"
+                    (click)="deleteAssessment(assessment)">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+              </svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="mt-4 flex justify-between items-center">
+    <div class="text-sm text-gray-500">
+      Showing 1 to 4 of 4 entries
+    </div>
+    <div class="flex items-center space-x-2">
+      <button class="px-3 py-1 text-sm text-gray-500 border border-gray-300 rounded hover:bg-gray-50" disabled>
+        Previous
+      </button>
+      <button class="px-3 py-1 text-sm bg-blue-600 text-white border border-blue-600 rounded">
+        1
+      </button>
+      <button class="px-3 py-1 text-sm text-gray-500 border border-gray-300 rounded hover:bg-gray-50" disabled>
+        Next
+      </button>
+    </div>
+  </div>
+
 </div> 

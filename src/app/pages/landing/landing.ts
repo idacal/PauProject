@@ -418,7 +418,7 @@ export class Landing {
           alert('Assessment created successfully! Redirecting to company information...');
           
           // Navigate to the company information dashboard
-          this.router.navigate(['/company-information']);
+          this.router.navigate(['/dashboard/company-information']);
         } catch (error: any) {
           console.error('Error creating assessment:', error);
           

@@ -2,10 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ApiService } from '../../api.service';
-import { HeaderConfig } from '../../shared/dashboard-header/dashboard-header.component';
-import { CompanyBarConfig } from '../../shared/company-name-bar/company-name-bar.component';
-import { TabItem, DropdownOption } from '../../shared/navigation-tabs/navigation-tabs.component';
-import { DASHBOARD_TABS } from '../../shared/navigation-tabs/navigation-tabs.config';
 
 @Component({
   selector: 'app-load-assessment',
@@ -14,23 +10,6 @@ import { DASHBOARD_TABS } from '../../shared/navigation-tabs/navigation-tabs.con
   styleUrl: './load-assessment.scss'
 })
 export class LoadAssessment implements OnInit, OnDestroy {
-  public activeTab: string = 'load-assessment';
-  
-  public headerConfig: HeaderConfig = {
-    pageType: 'company',
-    title: 'D&O Underwriting Dashboard',
-    showUploadIcon: true,
-    backgroundColor: 'bg-gray-50',
-    textColor: 'text-gray-600'
-  };
-
-  public companyBarConfig: CompanyBarConfig = {
-    companyName: '',
-    showBar: true
-  };
-
-  public tabs: TabItem[] = DASHBOARD_TABS;
-
   // Properties for API data
   public assessments: any[] = [];
   public isLoading: boolean = false;
@@ -107,46 +86,18 @@ export class LoadAssessment implements OnInit, OnDestroy {
     });
   }
 
-  switchTab(tabId: string): void {
-    // Handle navigation to other pages
-    switch (tabId) {
-      case 'company-information':
-        this.router.navigate(['/company-information']);
-        break;
-      case 'market-information':
-        this.router.navigate(['/market-information']);
-        break;
-      case 'financial-condition':
-        this.router.navigate(['/financial-information']);
-        break;
-      case 'governance':
-      case 'litigation':
-      case 'nature-business':
-      case 'loss-probability':
-      case 'overall-summary':
-        // These would navigate to their respective pages when implemented
-        console.log(`Navigation to ${tabId} not implemented yet`);
-        break;
-      default:
-        this.activeTab = tabId;
-        break;
-    }
-  }
-
   navigateToSearch(): void {
     this.router.navigate(['/landing']);
   }
 
-  refreshAssessments(): void {
-    this.loadAssessments();
-  }
+
 
   loadAssessment(assessment: any): void {
     console.log('Loading assessment:', assessment);
     // Navigate to company-information with the assessment data
     // Store the assessment data in the API service for the company-information page to use
     (this.apiService as any).companyInfoSubject.next(assessment);
-    this.router.navigate(['/company-information']);
+    this.router.navigate(['/dashboard/company-information']);
   }
 
   deleteAssessment(assessment: any): void {

@@ -1,34 +1,41 @@
 <div class="bg-white p-6 rounded-lg shadow-md h-80">
   <h3 class="text-lg font-semibold text-blue-700 mb-4">Company Information</h3>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+  
+  <!-- Loading State -->
+  <div *ngIf="!companyData" class="flex items-center justify-center h-48">
+    <div class="text-gray-500">Loading company information...</div>
+  </div>
+
+  <!-- Data Display -->
+  <div *ngIf="companyData" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-sm">
     <div>
       <dl class="space-y-3">
         <div class="flex justify-between py-2">
           <dt class="font-bold text-gray-800">Name</dt>
-          <dd class="font-normal text-gray-600">Ymab Therapeutics</dd>
+          <dd class="font-normal text-gray-600">{{ companyInfo?.name || 'Not available' }}</dd>
         </div>
         <div class="flex justify-between py-2">
           <dt class="font-bold text-gray-800">Ticker</dt>
-          <dd class="font-normal text-gray-600">YMAB</dd>
+          <dd class="font-normal text-gray-600">{{ companyInfo?.ticker || 'Not available' }}</dd>
         </div>
         <div class="flex justify-between py-2">
           <dt class="font-bold text-gray-800">Industry</dt>
-          <dd class="font-normal text-gray-600">Biotechnology</dd>
+          <dd class="font-normal text-gray-600">{{ industryInfo?.label || 'Not available' }}</dd>
         </div>
         <div class="flex justify-between py-2">
           <dt class="font-bold text-gray-800">Status</dt>
-          <dd class="font-normal text-gray-600">Inactive</dd>
+          <dd class="font-normal text-gray-600">{{ companyInfo?.status || 'Not available' }}</dd>
         </div>
         <div class="flex justify-between py-2">
           <dt class="font-bold text-gray-800">State/Country</dt>
-          <dd class="font-normal text-gray-600">New York / USA</dd>
+          <dd class="font-normal text-gray-600">{{ location }}</dd>
         </div>
       </dl>
     </div>
     <div>
       <h4 class="font-bold text-gray-800">Description</h4>
-      <p class="font-normal text-gray-600 mt-1">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      <p class="font-normal text-gray-600 mt-1 text-xs leading-relaxed overflow-y-auto max-h-32">
+        {{ companyInfo?.description || 'No description available.' }}
       </p>
     </div>
   </div>

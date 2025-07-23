@@ -55,20 +55,37 @@ export class ApiService {
 
   async getAssessments(): Promise<void> {
     try {
+      console.log('API Service - Fetching assessments from:', `${this.baseUrl}/assessment`);
       const res = await axios.get(`${this.baseUrl}/assessment`);
+      console.log('API Service - Assessments response:', res.data);
+      console.log('API Service - Response type:', typeof res.data);
+      console.log('API Service - Is array:', Array.isArray(res.data));
       this.responseSubject.next(res.data);
     } catch (err) {
       console.error('getAssessments error', err);
+      if (err && typeof err === 'object' && 'response' in err) {
+        const axiosError = err as any;
+        console.error('Error response status:', axiosError.response?.status);
+        console.error('Error response data:', axiosError.response?.data);
+      }
       this.responseSubject.next({ error: 'API error' });
     }
   }
 
   async getAssessmentById(id: string): Promise<void> {
     try {
+      console.log('API Service - Fetching assessment by ID:', id, 'from:', `${this.baseUrl}/assessment/${id}`);
       const res = await axios.get(`${this.baseUrl}/assessment/${id}`);
+      console.log('API Service - Assessment by ID response:', res.data);
       this.responseSubject.next(res.data);
+      this.companyInfoSubject.next(res.data); // Also store in companyInfo for navigation
     } catch (err) {
       console.error('getAssessmentById error', err);
+      if (err && typeof err === 'object' && 'response' in err) {
+        const axiosError = err as any;
+        console.error('Error response status:', axiosError.response?.status);
+        console.error('Error response data:', axiosError.response?.data);
+      }
       this.responseSubject.next({ error: 'API error' });
     }
   }

@@ -1,5 +1,7 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Chart, ChartConfiguration, ChartEvent, ChartType, registerables } from 'chart.js';
+import { ApiService } from '../../../../api.service';
 
 @Component({
   selector: 'app-market-graphs-card',
@@ -7,21 +9,46 @@ import { Chart, ChartConfiguration, ChartEvent, ChartType, registerables } from 
   templateUrl: './market-graphs-card.html',
   styleUrl: './market-graphs-card.scss'
 })
-export class MarketGraphsCard implements OnInit, AfterViewInit {
+export class MarketGraphsCard implements OnInit, AfterViewInit, OnDestroy {
   public activeChart: 'sharePrice' | 'marketCap' = 'sharePrice';
   public shareChart: Chart | null = null;
   public marketCapChart: Chart | null = null;
+  public companyData: any = null;
+  private subscription: Subscription = new Subscription();
 
-  constructor() {
+  constructor(private apiService: ApiService) {
     Chart.register(...registerables);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.subscription.add(
+      this.apiService.companyInfo$.subscribe(data => {
+        console.log('Market Graphs Card - Received data:', data);
+        this.companyData = data;
+        if (data && this.shareChart && this.marketCapChart) {
+          this.updateChartsWithData();
+        }
+      })
+    );
+  }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.initializeCharts();
+      if (this.companyData) {
+        this.updateChartsWithData();
+      }
     }, 100);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+    if (this.shareChart) {
+      this.shareChart.destroy();
+    }
+    if (this.marketCapChart) {
+      this.marketCapChart.destroy();
+    }
   }
 
   switchChart(chartType: 'sharePrice' | 'marketCap'): void {
@@ -33,28 +60,118 @@ export class MarketGraphsCard implements OnInit, AfterViewInit {
     this.createMarketCapChart();
   }
 
+  private updateChartsWithData(): void {
+    if (!this.companyData?.values) return;
+
+    // Update Share Price Chart
+    if (this.shareChart && this.companyData.values.yearlySharePrice) {
+      this.updateSharePriceChart();
+    }
+
+    // Update Market Cap Chart (using market price data)
+    if (this.marketCapChart && this.companyData.values.yearlyMarketPrice) {
+      this.updateMarketCapChart();
+    }
+  }
+
+  private updateSharePriceChart(): void {
+    const yearlyTurnover = this.companyData.values.yearlySharePrice.yearlyTurnover;
+    const years = Object.keys(yearlyTurnover).sort();
+    const values = years.map(year => parseFloat((yearlyTurnover[year] / 1000000000).toFixed(2))); // Convert to billions
+
+    if (this.shareChart) {
+      this.shareChart.data.labels = years;
+      this.shareChart.data.datasets[0] = {
+        label: 'Yearly Turnover (Billions USD)',
+        data: values,
+        borderColor: 'rgb(59, 130, 246)',
+        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.4
+      };
+      // Remove second dataset for cleaner look with real data
+      this.shareChart.data.datasets = [this.shareChart.data.datasets[0]];
+      this.shareChart.update();
+    }
+  }
+
+  private updateMarketCapChart(): void {
+    const yearlyMarketPrice = this.companyData.values.yearlyMarketPrice;
+    
+    // Get the most recent year's monthly data
+    const years = Object.keys(yearlyMarketPrice.close).sort();
+    const latestYear = years[years.length - 1];
+    
+    if (!yearlyMarketPrice.close[latestYear]) return;
+
+    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    const monthLabels = months.map(month => month.charAt(0) + month.slice(1).toLowerCase());
+    
+    const closeData = months.map(month => {
+      const value = yearlyMarketPrice.close[latestYear][month];
+      return value ? parseFloat(value.toFixed(2)) : null;
+    }).filter(value => value !== null);
+
+    const highData = months.map(month => {
+      const value = yearlyMarketPrice.high[latestYear][month];
+      return value ? parseFloat(value.toFixed(2)) : null;
+    }).filter(value => value !== null);
+
+    const lowData = months.map(month => {
+      const value = yearlyMarketPrice.low[latestYear][month];
+      return value ? parseFloat(value.toFixed(2)) : null;
+    }).filter(value => value !== null);
+
+    if (this.marketCapChart) {
+      this.marketCapChart.data.labels = monthLabels.slice(0, closeData.length);
+      this.marketCapChart.data.datasets = [
+        {
+          label: `Close Price ${latestYear} (USD)`,
+          data: closeData,
+          borderColor: 'rgb(34, 197, 94)',
+          backgroundColor: 'rgba(34, 197, 94, 0.1)',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.4
+        },
+        {
+          label: `High Price ${latestYear} (USD)`,
+          data: highData,
+          borderColor: 'rgb(59, 130, 246)',
+          backgroundColor: 'rgba(59, 130, 246, 0.1)',
+          borderWidth: 2,
+          fill: false,
+          tension: 0.4
+        },
+        {
+          label: `Low Price ${latestYear} (USD)`,
+          data: lowData,
+          borderColor: 'rgb(239, 68, 68)',
+          backgroundColor: 'rgba(239, 68, 68, 0.1)',
+          borderWidth: 2,
+          fill: false,
+          tension: 0.4
+        }
+      ];
+      this.marketCapChart.update();
+    }
+  }
+
   private createSharePriceChart(): void {
     const canvas = document.getElementById('sharePriceChart') as HTMLCanvasElement;
     if (canvas) {
       this.shareChart = new Chart(canvas, {
         type: 'line',
         data: {
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          labels: ['Loading...'],
           datasets: [{
-            label: 'Share Price ($)',
-            data: [45.2, 48.7, 52.1, 49.8, 53.4, 57.2, 54.9, 58.1, 61.3, 59.7, 63.2, 65.8],
+            label: 'Loading data...',
+            data: [0],
             borderColor: 'rgb(59, 130, 246)',
             backgroundColor: 'rgba(59, 130, 246, 0.1)',
             borderWidth: 2,
             fill: true,
-            tension: 0.4
-          }, {
-            label: 'Target Price ($)',
-            data: [42.0, 46.5, 50.8, 47.2, 51.1, 55.8, 52.3, 56.7, 59.8, 57.4, 61.5, 63.2],
-            borderColor: 'rgb(239, 68, 68)',
-            backgroundColor: 'rgba(239, 68, 68, 0.1)',
-            borderWidth: 2,
-            fill: false,
             tension: 0.4
           }]
         },
@@ -75,7 +192,7 @@ export class MarketGraphsCard implements OnInit, AfterViewInit {
               },
               title: {
                 display: true,
-                text: 'USD'
+                text: 'Billions USD'
               }
             },
             x: {
@@ -95,22 +212,14 @@ export class MarketGraphsCard implements OnInit, AfterViewInit {
       this.marketCapChart = new Chart(canvas, {
         type: 'line',
         data: {
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          labels: ['Loading...'],
           datasets: [{
-            label: 'Market Cap (Billions)',
-            data: [2.8, 3.1, 2.9, 3.4, 3.7, 3.2, 3.9, 4.1, 3.8, 4.3, 4.6, 4.2],
+            label: 'Loading data...',
+            data: [0],
             borderColor: 'rgb(34, 197, 94)',
             backgroundColor: 'rgba(34, 197, 94, 0.1)',
             borderWidth: 2,
             fill: true,
-            tension: 0.4
-          }, {
-            label: 'Industry Average (Billions)',
-            data: [2.5, 2.8, 2.6, 3.1, 3.4, 2.9, 3.6, 3.8, 3.5, 4.0, 4.3, 3.9],
-            borderColor: 'rgb(168, 85, 247)',
-            backgroundColor: 'rgba(168, 85, 247, 0.1)',
-            borderWidth: 2,
-            fill: false,
             tension: 0.4
           }]
         },
@@ -142,17 +251,6 @@ export class MarketGraphsCard implements OnInit, AfterViewInit {
           }
         }
       });
-    }
-  }
-
-
-
-  ngOnDestroy(): void {
-    if (this.shareChart) {
-      this.shareChart.destroy();
-    }
-    if (this.marketCapChart) {
-      this.marketCapChart.destroy();
     }
   }
 }

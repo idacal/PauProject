@@ -92,12 +92,42 @@ export class LoadAssessment implements OnInit, OnDestroy {
 
 
 
-  loadAssessment(assessment: any): void {
+  async loadAssessment(assessment: any): Promise<void> {
     console.log('Loading assessment:', assessment);
-    // Navigate to company-information with the assessment data
-    // Store the assessment data in the API service for the company-information page to use
-    (this.apiService as any).companyInfoSubject.next(assessment);
-    this.router.navigate(['/dashboard/company-information']);
+    
+    // Get the assessment ID
+    const assessmentId = assessment.id || assessment._id;
+    
+    if (!assessmentId) {
+      console.error('No assessment ID found:', assessment);
+      alert('Cannot load assessment: No ID found');
+      return;
+    }
+
+    try {
+      // Show loading state
+      this.isLoading = true;
+      console.log('Loading assessment data for ID:', assessmentId);
+      
+      // Instead of calling getAssessmentById (which returns 500), 
+      // use the assessment data we already have from the list
+      console.log('Using existing assessment data:', assessment);
+      
+      // Store the assessment data directly in the API service
+      (this.apiService as any).companyInfoSubject.next(assessment);
+      
+      // Give it a moment to process
+      setTimeout(() => {
+        this.isLoading = false;
+        console.log('Navigating to company information page...');
+        this.router.navigate(['/dashboard/company-information']);
+      }, 500);
+      
+    } catch (error) {
+      this.isLoading = false;
+      console.error('Error loading assessment:', error);
+      alert('Error loading assessment. Please try again.');
+    }
   }
 
   deleteAssessment(assessment: any): void {
@@ -129,4 +159,30 @@ export class LoadAssessment implements OnInit, OnDestroy {
     }
   }
 
+  // Helper methods to extract data from assessment objects
+  getAssessmentCompanyName(assessment: any): string {
+    // Try different possible structures
+    return assessment.company || 
+           assessment.data?.company?.name || 
+           assessment.values?.companyInfo?.name ||
+           assessment.companyName || 
+           'N/A';
+  }
+
+  getAssessmentIndustry(assessment: any): string {
+    // Try different possible structures
+    return assessment.lob || 
+           assessment.industry?.label || 
+           assessment.data?.industry?.label ||
+           'D&O';
+  }
+
+  getAssessmentId(assessment: any): string {
+    return assessment.id || assessment._id || 'N/A';
+  }
+
+  getAssessmentDate(assessment: any): string {
+    const dateStr = assessment.last_update || assessment.creation_date;
+    return this.formatDate(dateStr);
+  }
 } 
